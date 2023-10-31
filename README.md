@@ -278,3 +278,11 @@ together with ‘subsets’:
   benefits of using without attaching and attaching a package, (3)
   extending the capabilities of the aforementioned ‘stringi’
   package, (4) functions to reduce repetitive code.
+
+ 
+
+## Changelog (EXPERIMENTAL VERSIONS)
+
+- 31 October 2023: Very first GitHub upload. Also: Halloween!
+
+ 
