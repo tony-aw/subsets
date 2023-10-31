@@ -111,7 +111,7 @@ subset_mat <- function(x, row = NULL, col = NULL, rp) {
 temp.fun.matrix <- function(x, row, col) {
   for(i in 1:length(row)) {
     for(j in 1:length(col)) {
-      if(!rlang::is_missing(row[[i]]) && !rlang::is_missing(col[[j]])) {
+      # if(!rlang::is_missing(row[[i]]) && !rlang::is_missing(col[[j]])) {
         len <- length(pre_subset_mat(x, row[[i]], col[[j]]))
         rp <- seq_len(len)
         expect_equal(
@@ -121,7 +121,7 @@ temp.fun.matrix <- function(x, row, col) {
         expect_true(sb_rp(x, row = row[[i]], col = col[[j]], rp = rp) |>
                       is.matrix()) |> errorfun()
         assign("enumerate", enumerate + 2, envir = parent.frame(n = 1))
-      }
+      # }
     }
   }
 }

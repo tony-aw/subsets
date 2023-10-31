@@ -115,7 +115,7 @@ subset_mat <- function(x, row = NULL, col = NULL) {
 temp.fun.matrix <- function(x, row, col) {
   for(i in 1:length(row)) {
     for(j in 1:length(col)) {
-      if(!rlang::is_missing(row[[i]]) && !rlang::is_missing(col[[j]])) {
+      # if(!rlang::is_missing(row[[i]]) && !rlang::is_missing(col[[j]])) {
         expect_equal(
           sb_x(x, row = row[[i]], col = col[[j]]),
           subset_mat(x, row[[i]], col[[j]])
@@ -123,7 +123,7 @@ temp.fun.matrix <- function(x, row, col) {
         expect_true(sb_x(x, row = row[[i]], col = col[[j]]) |>
                       is.matrix()) |> errorfun()
         assign("enumerate", enumerate + 2, envir = parent.frame(n = 1))
-      }
+      # }
     }
   }
 }
@@ -269,7 +269,7 @@ temp.fun.main <- function(x, row, col, filter, get_vars) {
 }
 
 
-rl. <- loadNamespace("rlang")
+# rl. <- loadNamespace("rlang")
 dt. <- loadNamespace("data.table")
 
 indx_general <- function(x, dim.i) {

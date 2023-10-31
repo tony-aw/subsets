@@ -40,60 +40,69 @@ if(isTRUE(test_allow_duplicates)) {
 }
 
 
-# data.table ==== 
-x <- dt.$as.data.table(x.original)
-temp.fun.main(x, row, col, filter, get_vars)
-
-
-if(isTRUE(test_allow_duplicates)) {
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
-    0
-  )
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
-    0
-  )
-  enumerate <- enumerate <- enumerate + 1
+# data.table ====
+if(requireNamespace("data.table")) {
+  
+  x <- dt.$as.data.table(x.original)
+  temp.fun.main(x, row, col, filter, get_vars)
+  
+  
+  if(isTRUE(test_allow_duplicates)) {
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
+      0
+    )
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
+      0
+    )
+    enumerate <- enumerate <- enumerate + 1
+  }
+  
 }
 
 
 
 # tibble ===
-x <- tibble::as_tibble(x.original)
-temp.fun.main(x, row, col, filter, get_vars)
-
-
-if(isTRUE(test_allow_duplicates)) {
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
-    0
-  )
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
-    0
-  )
-  enumerate <- enumerate <- enumerate + 1
+if(requireNamespace("tibble")) {
+  x <- tibble::as_tibble(x.original)
+  temp.fun.main(x, row, col, filter, get_vars)
+  
+  
+  if(isTRUE(test_allow_duplicates)) {
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
+      0
+    )
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
+      0
+    )
+    enumerate <- enumerate <- enumerate + 1
+  }
 }
 
 
+
 # tidytable ===
-
-x <- tidytable::as_tidytable(x.original)
-
-temp.fun.main(x, row, col, filter, get_vars)
-
-
-if(isTRUE(test_allow_duplicates)) {
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
-    0
-  )
-  expect_equal(
-    anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
-    0
-  )
-  enumerate <- enumerate <- enumerate + 1
+if(requireNamespace("tidytable")) {
+  x <- tidytable::as_tidytable(x.original)
+  
+  temp.fun.main(x, row, col, filter, get_vars)
+  
+  
+  if(isTRUE(test_allow_duplicates)) {
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c(1,1,1)))),
+      0
+    )
+    expect_equal(
+      anyDuplicated(colnames(sb_x(x, col = c("a","a","a")))),
+      0
+    )
+    enumerate <- enumerate <- enumerate + 1
+  }
+  
 }
 
 
