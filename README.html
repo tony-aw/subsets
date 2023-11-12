@@ -621,7 +621,7 @@ And R is no exception.
 
 This becomes quite apparent when one reads (online) documents such
 as &quot;The R Inferno&quot; by Patrick Burns, and &quot;Frustration: One Year
-With R&quot; by Reece Goding. These document point out many
+With R&quot; by Reece Goding. These documents point out many
 inconsistencies, and sub-setting related inconsistencies make up a
 good portion of these documents.
 
@@ -653,12 +653,12 @@ the following properties:</p>
 <ul>
 <li><p><em>Programmatically friendly</em>:</p>
 <ul>
-<li><p>Non-standard evaluation is highly controversial (and for good
+<li><p>Non-standard evaluation is quite controversial (and for good
 reasons), and therefore completely absent in this R package.</p></li>
 <li><p>Name-based arguments instead of position-based
 arguments.</p></li>
-<li><p>Missing arguments can be filled with ‘NULL’, instead of using
-dark magic like ‘base::quote(expr = )’.</p></li>
+<li><p>Missing arguments can be filled with <code>NULL</code>, instead
+of using dark magic like <code>base::quote(expr = )</code>.</p></li>
 <li><p>Functions are pipe-friendly.</p></li>
 </ul></li>
 <li><p><em>Beginner friendly</em>:</p>
@@ -671,8 +671,8 @@ otherwise.</p></li>
 <li><p><em>Class consistent</em>:</p>
 <ul>
 <li><p>sub-setting of multi-dimensional objects by specifying dimensions
-(i.e. rows, columns, …) use ‘drop = FALSE’. So matrix in, matrix
-out.</p></li>
+(i.e. rows, columns, …) use <code>drop = FALSE</code>. So matrix in,
+matrix out.</p></li>
 <li><p>The functions deliver the same results for data.frames,
 data.tables, tibbles, and tidytables. No longer does one have to
 re-learn the different brackets-based sub-setting rules for different
@@ -700,9 +700,9 @@ to have unique column names.</p></li>
 <li><p>Attributes of data.frame-like objects (see supported classes
 below) are always preserved when sub-setting.</p></li>
 <li><p>For other object types, the user can specify whether to preserve
-Attributes, or use R’s ‘[’ attribute behaviour (i.e. drop most
-attributes). This is to ensure compatibility with R packages that create
-their own attribute behaviour for sub-setting.</p></li>
+Attributes, or use R’s <code>[</code> attribute behaviour (i.e. drop
+most attributes). This is to ensure compatibility with R packages that
+create their own attribute behaviour for sub-setting.</p></li>
 </ul></li>
 <li><p><em>Support a wide variety of data types</em>:</p>
 <ul>
@@ -714,7 +714,7 @@ arrays).</p></li>
 data.table, tibble, and tidytable class, and objects derived from these
 classes.</p></li>
 <li><p>Support for the column selection sub-setting used in ggplot2’s
-aes function.</p></li>
+<code>aes()</code> function.</p></li>
 <li><p>Support for sub-setting characters in a single string.</p></li>
 <li><p>Since the main functions are S3 functions, other packages may add
 functionality for additional classes.</p></li>

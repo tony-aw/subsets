@@ -25,7 +25,7 @@ subsets: an Easy Grammar of Subsets
 
     This becomes quite apparent when one reads (online) documents such
     as "The R Inferno" by Patrick Burns, and "Frustration: One Year
-    With R" by Reece Goding. These document point out many
+    With R" by Reece Goding. These documents point out many
     inconsistencies, and sub-setting related inconsistencies make up a
     good portion of these documents.
 
@@ -59,13 +59,13 @@ following properties:
 
 - *Programmatically friendly*:
 
-  - Non-standard evaluation is highly controversial (and for good
+  - Non-standard evaluation is quite controversial (and for good
     reasons), and therefore completely absent in this R package.
 
   - Name-based arguments instead of position-based arguments.
 
-  - Missing arguments can be filled with ‘NULL’, instead of using dark
-    magic like ‘base::quote(expr = )’.
+  - Missing arguments can be filled with `NULL`, instead of using dark
+    magic like `base::quote(expr = )`.
 
   - Functions are pipe-friendly.
 
@@ -80,7 +80,7 @@ following properties:
 - *Class consistent*:
 
   - sub-setting of multi-dimensional objects by specifying dimensions
-    (i.e. rows, columns, …) use ‘drop = FALSE’. So matrix in, matrix
+    (i.e. rows, columns, …) use `drop = FALSE`. So matrix in, matrix
     out.
 
   - The functions deliver the same results for data.frames, data.tables,
@@ -116,7 +116,7 @@ following properties:
     are always preserved when sub-setting.
 
   - For other object types, the user can specify whether to preserve
-    Attributes, or use R’s ‘\[’ attribute behaviour (i.e. drop most
+    Attributes, or use R’s `[` attribute behaviour (i.e. drop most
     attributes). This is to ensure compatibility with R packages that
     create their own attribute behaviour for sub-setting.
 
@@ -132,8 +132,8 @@ following properties:
     data.table, tibble, and tidytable class, and objects derived from
     these classes.
 
-  - Support for the column selection sub-setting used in ggplot2’s aes
-    function.
+  - Support for the column selection sub-setting used in ggplot2’s
+    `aes()` function.
 
   - Support for sub-setting characters in a single string.
 
