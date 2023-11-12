@@ -47,33 +47,40 @@ subsets: an Easy Grammar of Subsets
 
  
 
-## Properties
+## Goal & Properties
 
-The subsets package provides easier subsetting functions with the
+The Goal of the ‘subsets’ package is NOT to replace the square-brackets
+operators (`[`, `[[`, `[<-`, and `[[<-`), but to provide **alternative**
+sub-setting methods and functions, to be used in situations where the
+square-brackets operators are inconvenient.
+
+These are (hopefully) easier sub-setting methods and functions with the
 following properties:
 
 - *Programmatically friendly*:
 
   - Non-standard evaluation is highly controversial (and for good
-    reasons!), and therefore completely absent in this R package;
+    reasons), and therefore completely absent in this R package.
 
-  - Name-based instead of position-based arguments;
+  - Name-based arguments instead of position-based arguments.
 
-  - Missing arguments can be filled with `NULL`, instead of using dark
-    magic like `base::quote(expr = )`.
+  - Missing arguments can be filled with ‘NULL’, instead of using dark
+    magic like ‘base::quote(expr = )’.
 
   - Functions are pipe-friendly.
 
 - *Beginner friendly*:
 
-  - No (silent) vector recycling;
+  - No (silent) vector recycling.
 
   - Extracting and removing subsets uses the same syntax.
+
+  - All functions return a copy of the object, unless stated otherwise.
 
 - *Class consistent*:
 
   - sub-setting of multi-dimensional objects by specifying dimensions
-    (i.e. rows, columns, …) use `drop = FALSE`. So matrix in, matrix
+    (i.e. rows, columns, …) use ‘drop = FALSE’. So matrix in, matrix
     out.
 
   - The functions deliver the same results for data.frames, data.tables,
@@ -84,36 +91,60 @@ following properties:
 
   - Smart with sub-setting recursive lists.
 
-- *Careful handling of name-based indexing*:
+- *Explicit copy semantics*:
+
+  - Sub-set operations that increase or decrease the number of elements
+    in an object, and thus change its memory allocations, always return
+    a modified copy of the object.
+
+  - For sub-set operations that just change values in-place (similar to
+    the \[\<- and \[\[\<- methods) the user can choose a method that
+    modify the object by *reference*, or choose a method that return a
+    *deep copy*.
+
+- *Careful handling of names and other attributes*:
 
   - Sub-setting object by index names returns ALL indices with that
-    name, not just the first;
+    name, not just the first.
 
-  - Data.frame-like objects are forced to have unique column names;
+  - Data.frame-like objects (see supported classes below) are forced to
+    have unique column names.
 
   - Selecting non-existing names always gives an error.
 
+  - Attributes of data.frame-like objects (see supported classes below)
+    are always preserved when sub-setting.
+
+  - For other object types, the user can specify whether to preserve
+    Attributes, or use R’s ‘\[’ attribute behaviour (i.e. drop most
+    attributes). This is to ensure compatibility with R packages that
+    create their own attribute behaviour for sub-setting.
+
 - *Support a wide variety of data types*:
 
-  - Support vector-like (atomic) objects (vectors, matrices, arrays);
+  - Support vector-like (atomic) objects (vectors, matrices, arrays).
 
-  - Support lists;
+  - Support lists.
 
-  - Support factors;
+  - Support factors.
 
-  - Support data.frame-like objects (data.frame, data.table, tibble,
-    tidytable, etc.).
+  - Support the following data.frame-like objects: data.frame,
+    data.table, tibble, and tidytable class, and objects derived from
+    these classes.
+
+  - Support for the column selection sub-setting used in ggplot2’s aes
+    function.
+
+  - Support for sub-setting characters in a single string.
+
+  - Since the main functions are S3 functions, other packages may add
+    functionality for additional classes.
 
 - *Concise function and argument names*.
 
-- *Special functions*: for string subsetting, vectorized recursive list
-  subsetting, and even for the column selection subsetting used in
-  ggplot2’s `aes()` function.
-
 - *Performance aware*: Despite the many checks performed, the functions
   are kept reasonably speedy, through the use of the ‘Rcpp’, ‘collapse’,
-  and ‘data.table’ R-packages. See the benchmarks section below for some
-  examples.
+  and ‘data.table’ R-packages.
 
  
 
@@ -125,12 +156,19 @@ The main focus is on the following generic S3 methods:
 
 - `sb_rm`: method to remove indices.
 
-- `sb_tf`: method to transform values of subsets.
+- `sb_mod`: method to return a **copy** of an object with modified
+  (transformed or replaced values) subsets.
+
+- `sb_set`: method to modify (transform or replace values) subsets of an
+  object by **reference**.
 
 - `sb_rp`: method to replace values of subsets.
 
 - `sb_before`, `sb_after`: methods to insert new values before or after
   an index along a dimension of an object.
+
+- `sb_rec`: not actually a method, but a function that can be combined
+  with the above methods, for recursive sub-setting operations.
 
 Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:
@@ -138,18 +176,21 @@ functions are provided:
 - `aes_pro`: programmatically friendly and stable version of ggplot2’s
   aesthetic sub-setting function.
 
-- `sb_str`: subset a single string (each single character is treated as
-  a single element).
+- `sb_str`: extract or replace a subset of characters of a single string
+  (each single character is treated as a single element).
 
-- `sb_rec`: recursive sub-setting of lists.
+- `sb_a`: extract multiple attributes from an object.
 
-And finally, a couple of helper functions for creating ranges and
-sequences (occasionally needed in sub-setting) are provided:
+And finally, a couple of helper functions for creating ranges, sequences
+and indices (sometimes needed in sub-setting) are provided:
 
 - `seq_rec`: Generalized recursive sequence generator.
 
 - `seq_names`: create a range of indices from a specified starting and
   ending name.
+
+- `sub2ind`, `ind2sub`: Convert subscripts (array indices) to flat
+  indices, and vice-versa.
 
  
 
@@ -183,79 +224,92 @@ tinycodet::import_LL("subsets", selection = ... )
 
 ## Benchmarks
 
-Due to the MANY, MANY checks and conversions performed by the
-`subsets::` functions, to make sub-setting more programmatically and
-beginner friendly, the functions are almost necessarily slower.
+Due to the many checks and conversions performed by the `subsets::`
+functions, to make sub-setting more programmatically and beginner
+friendly, the functions are almost necessarily slower than base R’s
+`[`-like operators.
 
 However, a considerable effort was made to keep the speed loss to a
 minimum. The exact speed loss depends on the situation. For example, the
 `subsets::` functions are about as fast as base R when sub-setting using
-names, but base R is much faster when sub-setting matrices using only
-numbers. But subsetting data.frames are actually faster with the
+names, but base R is faster when sub-setting matrices using only
+numbers. But sub-setting data.frames are actually faster with the
 `subsets::` functions than in base R.
 
 Below are some benchmarks to give one an idea of the speed loss. These
 are just examples; speed is determined by a great number of factors.
 
-``` r
-library(rbenchmark)
-library(subsets)
-```
+ 
+
+### Matrix
 
 ``` r
-x <- matrix(1:50000, ncol = 20)
-colnames(x) <- c(letters[1:18], "a", NA)
-bm.matrix <- benchmark(
-  "subsets" = sb_x(x, 1:100, c("a", "a")),
+x <- matrix(seq_len(1000*900), ncol = 900)
+colnames(x) <- sample(c(letters, NA), 900, TRUE)
+bm.matrix <- rbenchmark::benchmark(
+  "subsets" = sb_x.matrix(x, 1:100, c("a", "a")),
   "base R" = x[1:100, lapply(c("a", "a"), \(i) which(colnames(x) == i)) |> unlist(), drop = FALSE],
-  replications = 100000
+  replications = 1e5,
+  order = NULL
 )
 print(bm.matrix)
 ```
 
     #>      test replications elapsed relative user.self sys.self user.child sys.child
-    #> 2  base R       100000    1.09     1.00      0.74        0         NA        NA
-    #> 1 subsets       100000    1.70     1.56      1.05        0         NA        NA
+    #> 1 subsets       100000    3.06     1.01      1.61     0.08         NA        NA
+    #> 2  base R       100000    3.03     1.00      1.66     0.03         NA        NA
+
+ 
+
+### Array (4D)
 
 ``` r
-x.dims <- c(1000,100,4)
+x.dims <- c(1000, 900, 4)
 x <- array(1:prod(x.dims), x.dims)
 idx <- list(1:100, c(TRUE, TRUE, TRUE, FALSE))
 dims <- c(1, 3)
-bm.array <- benchmark(
-  "subsets" = sb_x(x, idx, dims),
+bm.array <- rbenchmark::benchmark(
+  "subsets" = sb_x.array(x, idx, dims),
   "base R + abind" = abind::asub(x, idx, dims),
-  replications = 10000
+  replications = 1e4,
+  order = NULL
 )
 print(bm.array)
 ```
 
     #>             test replications elapsed relative user.self sys.self user.child
-    #> 2 base R + abind        10000    1.20    1.026      0.72     0.16         NA
-    #> 1        subsets        10000    1.17    1.000      0.56     0.11         NA
+    #> 1        subsets        10000    9.55    1.000      4.33     0.61         NA
+    #> 2 base R + abind        10000    9.72    1.018      3.19     0.43         NA
     #>   sys.child
-    #> 2        NA
     #> 1        NA
+    #> 2        NA
+
+ 
+
+### Data.frame
 
 ``` r
-n <- 1e5
+
+n <- 1e6
 x <- data.frame(
   a = seq_len(n),
   b = sample(letters, size = n, replace = TRUE),
   c = seq_len(n) * -1,
   d = sample(rev(letters), size = n, replace = TRUE)
 )
-bm.df <- benchmark(
-  "subsets" = sb_x(x, 1:1000, c("a", "a")),
-  "base R" = x[1:1000, lapply(c("a", "a"), \(i) which(colnames(x) == i)) |> unlist(), drop = FALSE],
-  replications = 1e4
+colsel <- rep("a", 4)
+bm.df <- rbenchmark::benchmark(
+  "subsets" = sb_x.data.frame(x, 1:1000, colsel),
+  "base R" = x[1:1000, match(colsel, names(x))],
+  replications = 1e4,
+  order = NULL
 )
 print(bm.df)
 ```
 
     #>      test replications elapsed relative user.self sys.self user.child sys.child
-    #> 2  base R        10000    0.49    1.225       0.2        0         NA        NA
-    #> 1 subsets        10000    0.40    1.000       0.3        0         NA        NA
+    #> 1 subsets        10000    0.37    1.000      0.19        0         NA        NA
+    #> 2  base R        10000    0.53    1.432      0.22        0         NA        NA
 
  
 
@@ -284,5 +338,12 @@ together with ‘subsets’:
 ## Changelog (EXPERIMENTAL VERSIONS)
 
 - 31 October 2023: Very first GitHub upload. Also: Halloween!
+- 12 November 2023: Optimised the code more. Update the benchmarks with
+  more representative sized objects. Merged `sb_rp()` and `sb_tf()` into
+  `sb_mod()`, and added `sb_set()`. Placed explanations of the common
+  indexing arguments in a separate help page for a better overview (and
+  less typing for me). Replaced the `.attr` argument with the `rat`
+  argument in `sb_x()` and `sb_rm()`. Added the `sub2ind` and `ind2sub`
+  functions.
 
  

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<h1 id="subsets">subsets</h1>
+<!-- badges: start -->
+
+<p><a href="https://www.repostatus.org/#wip"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTA2IiBoZWlnaHQ9IjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9InJlcG8gc3RhdHVzOiBXSVAiPjx0aXRsZT5yZXBvIHN0YXR1czogV0lQPC90aXRsZT48bGluZWFyR3JhZGllbnQgaWQ9InMiIHgyPSIwIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9InIiPjxyZWN0IHdpZHRoPSIxMDYiIGhlaWdodD0iMjAiIHJ4PSIzIiBmaWxsPSIjZmZmIi8+PC9jbGlwUGF0aD48ZyBjbGlwLXBhdGg9InVybCgjcikiPjxyZWN0IHdpZHRoPSI3MyIgaGVpZ2h0PSIyMCIgZmlsbD0iIzU1NSIvPjxyZWN0IHg9IjczIiB3aWR0aD0iMzMiIGhlaWdodD0iMjAiIGZpbGw9IiNkZmIzMTciLz48cmVjdCB3aWR0aD0iMTA2IiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI3MpIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjExMCI+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9IjM3NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iNjMwIj5yZXBvIHN0YXR1czwvdGV4dD48dGV4dCB4PSIzNzUiIHk9IjE0MCIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIGZpbGw9IiNmZmYiIHRleHRMZW5ndGg9IjYzMCI+cmVwbyBzdGF0dXM8L3RleHQ+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9Ijg4NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMjMwIj5XSVA8L3RleHQ+PHRleHQgeD0iODg1IiB5PSIxNDAiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiBmaWxsPSIjZmZmIiB0ZXh0TGVuZ3RoPSIyMzAiPldJUDwvdGV4dD48L2c+PC9zdmc+" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
+<a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTM4IiBoZWlnaHQ9IjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9ImxpZmVjeWNsZTogZXhwZXJpbWVudGFsIj48dGl0bGU+bGlmZWN5Y2xlOiBleHBlcmltZW50YWw8L3RpdGxlPjxsaW5lYXJHcmFkaWVudCBpZD0icyIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iciI+PHJlY3Qgd2lkdGg9IjEzOCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz48L2NsaXBQYXRoPjxnIGNsaXAtcGF0aD0idXJsKCNyKSI+PHJlY3Qgd2lkdGg9IjU1IiBoZWlnaHQ9IjIwIiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iNTUiIHdpZHRoPSI4MyIgaGVpZ2h0PSIyMCIgZmlsbD0iI2ZlN2QzNyIvPjxyZWN0IHdpZHRoPSIxMzgiIGhlaWdodD0iMjAiIGZpbGw9InVybCgjcykiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTEwIj48dGV4dCBhcmlhLWhpZGRlbj0idHJ1ZSIgeD0iMjg1IiB5PSIxNTAiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB0ZXh0TGVuZ3RoPSI0NTAiPmxpZmVjeWNsZTwvdGV4dD48dGV4dCB4PSIyODUiIHk9IjE0MCIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIGZpbGw9IiNmZmYiIHRleHRMZW5ndGg9IjQ1MCI+bGlmZWN5Y2xlPC90ZXh0Pjx0ZXh0IGFyaWEtaGlkZGVuPSJ0cnVlIiB4PSI5NTUiIHk9IjE1MCIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHRleHRMZW5ndGg9IjczMCI+ZXhwZXJpbWVudGFsPC90ZXh0Pjx0ZXh0IHg9Ijk1NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgZmlsbD0iI2ZmZiIgdGV4dExlbmd0aD0iNzMwIj5leHBlcmltZW50YWw8L3RleHQ+PC9nPjwvc3ZnPg==" /></a>
+<a href="https://orcid.org/0000-0001-9498-8379"><img src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTg0IiBoZWlnaHQ9IjIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Ik9SQ0lEOiAwMDAwLTAwMDEtOTQ5OC04Mzc5Ij48dGl0bGU+T1JDSUQ6IDAwMDAtMDAwMS05NDk4LTgzNzk8L3RpdGxlPjxsaW5lYXJHcmFkaWVudCBpZD0icyIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iciI+PHJlY3Qgd2lkdGg9IjE4NCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz48L2NsaXBQYXRoPjxnIGNsaXAtcGF0aD0idXJsKCNyKSI+PHJlY3Qgd2lkdGg9IjQ3IiBoZWlnaHQ9IjIwIiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iNDciIHdpZHRoPSIxMzciIGhlaWdodD0iMjAiIGZpbGw9IiM5N2NhMDAiLz48cmVjdCB3aWR0aD0iMTg0IiBoZWlnaHQ9IjIwIiBmaWxsPSJ1cmwoI3MpIi8+PC9nPjxnIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hLEdlbmV2YSxEZWphVnUgU2FucyxzYW5zLXNlcmlmIiB0ZXh0LXJlbmRlcmluZz0iZ2VvbWV0cmljUHJlY2lzaW9uIiBmb250LXNpemU9IjExMCI+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9IjI0NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMzcwIj5PUkNJRDwvdGV4dD48dGV4dCB4PSIyNDUiIHk9IjE0MCIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIGZpbGw9IiNmZmYiIHRleHRMZW5ndGg9IjM3MCI+T1JDSUQ8L3RleHQ+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9IjExNDUiIHk9IjE1MCIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHRleHRMZW5ndGg9IjEyNzAiPjAwMDAtMDAwMS05NDk4LTgzNzk8L3RleHQ+PHRleHQgeD0iMTE0NSIgeT0iMTQwIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgZmlsbD0iI2ZmZiIgdGV4dExlbmd0aD0iMTI3MCI+MDAwMC0wMDAxLTk0OTgtODM3OTwvdGV4dD48L2c+PC9zdmc+" /></a></p>
+<!-- badges: end -->
+
+<p>subsets: an Easy Grammar of Subsets</p>
+<p> </p>
+<h2 id="motivation">Motivation</h2>
+<pre><code>Among programming languages, &#39;R&#39; has perhaps one of the most
+flexible and comprehensive sub-setting functionality. But with
+flexibility often comes confusion and (apparent) inconsistencies.
+And R is no exception.
+
+This becomes quite apparent when one reads (online) documents such
+as &quot;The R Inferno&quot; by Patrick Burns, and &quot;Frustration: One Year
+With R&quot; by Reece Goding. These document point out many
+inconsistencies, and sub-setting related inconsistencies make up a
+good portion of these documents.
+
+To my surprise, there is no comprehensive R package (as far as I
+could see at least) that actually attempts to &quot;fix&quot; the
+subset-related issues laid out in these and other such documents.
+
+Famous subset-related R packages such as &#39;dplyr&#39; and &#39;data.table&#39;
+focus almost exclusive on data.frame-like objects, and
+occasionally even add more frustration in some aspects, like being
+not very programmatically friendly.
+
+Thus, this R package was born.
+
+Although this package was somewhat made for people who are new to
+&#39;R&#39; (especially when coming from another programming language),
+and found themselves confused, I trust this package will be useful
+even for those who are quite experienced in &#39;R&#39;.</code></pre>
+<p> </p>
+<h2 id="goal--properties">Goal &amp; Properties</h2>
+<p>The Goal of the ‘subsets’ package is NOT to replace the
+square-brackets operators (<code>[</code>, <code>[[</code>,
+<code>[&lt;-</code>, and <code>[[&lt;-</code>), but to provide
+<strong>alternative</strong> sub-setting methods and functions, to be
+used in situations where the square-brackets operators are
+inconvenient.</p>
+<p>These are (hopefully) easier sub-setting methods and functions with
+the following properties:</p>
+<ul>
+<li><p><em>Programmatically friendly</em>:</p>
+<ul>
+<li><p>Non-standard evaluation is highly controversial (and for good
+reasons), and therefore completely absent in this R package.</p></li>
+<li><p>Name-based arguments instead of position-based
+arguments.</p></li>
+<li><p>Missing arguments can be filled with ‘NULL’, instead of using
+dark magic like ‘base::quote(expr = )’.</p></li>
+<li><p>Functions are pipe-friendly.</p></li>
+</ul></li>
+<li><p><em>Beginner friendly</em>:</p>
+<ul>
+<li><p>No (silent) vector recycling.</p></li>
+<li><p>Extracting and removing subsets uses the same syntax.</p></li>
+<li><p>All functions return a copy of the object, unless stated
+otherwise.</p></li>
+</ul></li>
+<li><p><em>Class consistent</em>:</p>
+<ul>
+<li><p>sub-setting of multi-dimensional objects by specifying dimensions
+(i.e. rows, columns, …) use ‘drop = FALSE’. So matrix in, matrix
+out.</p></li>
+<li><p>The functions deliver the same results for data.frames,
+data.tables, tibbles, and tidytables. No longer does one have to
+re-learn the different brackets-based sub-setting rules for different
+types of data.frame-like objects. Powered by the subclass agnostic
+‘C’-code from ‘collapse’ and ‘data.table’.</p></li>
+<li><p>Smart with sub-setting recursive lists.</p></li>
+</ul></li>
+<li><p><em>Explicit copy semantics</em>:</p>
+<ul>
+<li><p>Sub-set operations that increase or decrease the number of
+elements in an object, and thus change its memory allocations, always
+return a modified copy of the object.</p></li>
+<li><p>For sub-set operations that just change values in-place (similar
+to the [&lt;- and [[&lt;- methods) the user can choose a method that
+modify the object by <em>reference</em>, or choose a method that return
+a <em>deep copy</em>.</p></li>
+</ul></li>
+<li><p><em>Careful handling of names and other attributes</em>:</p>
+<ul>
+<li><p>Sub-setting object by index names returns ALL indices with that
+name, not just the first.</p></li>
+<li><p>Data.frame-like objects (see supported classes below) are forced
+to have unique column names.</p></li>
+<li><p>Selecting non-existing names always gives an error.</p></li>
+<li><p>Attributes of data.frame-like objects (see supported classes
+below) are always preserved when sub-setting.</p></li>
+<li><p>For other object types, the user can specify whether to preserve
+Attributes, or use R’s ‘[’ attribute behaviour (i.e. drop most
+attributes). This is to ensure compatibility with R packages that create
+their own attribute behaviour for sub-setting.</p></li>
+</ul></li>
+<li><p><em>Support a wide variety of data types</em>:</p>
+<ul>
+<li><p>Support vector-like (atomic) objects (vectors, matrices,
+arrays).</p></li>
+<li><p>Support lists.</p></li>
+<li><p>Support factors.</p></li>
+<li><p>Support the following data.frame-like objects: data.frame,
+data.table, tibble, and tidytable class, and objects derived from these
+classes.</p></li>
+<li><p>Support for the column selection sub-setting used in ggplot2’s
+aes function.</p></li>
+<li><p>Support for sub-setting characters in a single string.</p></li>
+<li><p>Since the main functions are S3 functions, other packages may add
+functionality for additional classes.</p></li>
+</ul></li>
+<li><p><em>Concise function and argument names</em>.</p></li>
+<li><p><em>Performance aware</em>: Despite the many checks performed,
+the functions are kept reasonably speedy, through the use of the ‘Rcpp’,
+‘collapse’, and ‘data.table’ R-packages.</p></li>
+</ul>
+<p> </p>
+<h2 id="methods-and-functions">Methods and Functions</h2>
+<p>The main focus is on the following generic S3 methods:</p>
+<ul>
+<li><p><code>sb_x</code>: method to extract, exchange, or duplicate
+indices.</p></li>
+<li><p><code>sb_rm</code>: method to remove indices.</p></li>
+<li><p><code>sb_mod</code>: method to return a <strong>copy</strong> of
+an object with modified (transformed or replaced values)
+subsets.</p></li>
+<li><p><code>sb_set</code>: method to modify (transform or replace
+values) subsets of an object by <strong>reference</strong>.</p></li>
+<li><p><code>sb_rp</code>: method to replace values of subsets.</p></li>
+<li><p><code>sb_before</code>, <code>sb_after</code>: methods to insert
+new values before or after an index along a dimension of an
+object.</p></li>
+<li><p><code>sb_rec</code>: not actually a method, but a function that
+can be combined with the above methods, for recursive sub-setting
+operations.</p></li>
+</ul>
+<p>Beside these generic S3 methods, additional specialized sub-setting
+functions are provided:</p>
+<ul>
+<li><p><code>aes_pro</code>: programmatically friendly and stable
+version of ggplot2’s aesthetic sub-setting function.</p></li>
+<li><p><code>sb_str</code>: extract or replace a subset of characters of
+a single string (each single character is treated as a single
+element).</p></li>
+<li><p><code>sb_a</code>: extract multiple attributes from an
+object.</p></li>
+</ul>
+<p>And finally, a couple of helper functions for creating ranges,
+sequences and indices (sometimes needed in sub-setting) are
+provided:</p>
+<ul>
+<li><p><code>seq_rec</code>: Generalized recursive sequence
+generator.</p></li>
+<li><p><code>seq_names</code>: create a range of indices from a
+specified starting and ending name.</p></li>
+<li><p><code>sub2ind</code>, <code>ind2sub</code>: Convert subscripts
+(array indices) to flat indices, and vice-versa.</p></li>
+</ul>
+<p> </p>
+<h2 id="installing--loading">Installing &amp; Loading</h2>
+<p>One can install ‘subsets’ from GitHub like so:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;https://github.com/tony-aw/subsets&quot;</span>)</span></code></pre></div>
+<p>Special care has been taken to make sure the function names are
+clear, and that the function names are unlikely to conflict with core R,
+the recommended R packages, the rstudioapi package, or major packages
+from the fastverse. So one can attach the package - thus exposing its
+functions to the namespace - using:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(subsets)</span></code></pre></div>
+<p>Should the user wish to expose specific functions from ‘subsets’ ONLY
+within a specific environment, like only within a specific function, one
+can use the following:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tinycodet<span class="sc">::</span><span class="fu">import_LL</span>(<span class="st">&quot;subsets&quot;</span>, <span class="at">selection =</span> ... )</span></code></pre></div>
+<p> </p>
+<h2 id="benchmarks">Benchmarks</h2>
+<p>Due to the many checks and conversions performed by the
+<code>subsets::</code> functions, to make sub-setting more
+programmatically and beginner friendly, the functions are almost
+necessarily slower than base R’s <code>[</code>-like operators.</p>
+<p>However, a considerable effort was made to keep the speed loss to a
+minimum. The exact speed loss depends on the situation. For example, the
+<code>subsets::</code> functions are about as fast as base R when
+sub-setting using names, but base R is faster when sub-setting matrices
+using only numbers. But sub-setting data.frames are actually faster with
+the <code>subsets::</code> functions than in base R.</p>
+<p>Below are some benchmarks to give one an idea of the speed loss.
+These are just examples; speed is determined by a great number of
+factors.</p>
+<p> </p>
+<h3 id="matrix">Matrix</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq_len</span>(<span class="dv">1000</span><span class="sc">*</span><span class="dv">900</span>), <span class="at">ncol =</span> <span class="dv">900</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">colnames</span>(x) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(letters, <span class="cn">NA</span>), <span class="dv">900</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>bm.matrix <span class="ot">&lt;-</span> rbenchmark<span class="sc">::</span><span class="fu">benchmark</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span> <span class="fu">sb_x.matrix</span>(x, <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>)),</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="st">&quot;base R&quot;</span> <span class="ot">=</span> x[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;a&quot;</span>), \(i) <span class="fu">which</span>(<span class="fu">colnames</span>(x) <span class="sc">==</span> i)) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(), <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">replications =</span> <span class="fl">1e5</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">order =</span> <span class="cn">NULL</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">print</span>(bm.matrix)</span></code></pre></div>
+<pre><code>#&gt;      test replications elapsed relative user.self sys.self user.child sys.child
+#&gt; 1 subsets       100000    3.06     1.01      1.61     0.08         NA        NA
+#&gt; 2  base R       100000    3.03     1.00      1.66     0.03         NA        NA</code></pre>
+<p> </p>
+<h3 id="array-4d">Array (4D)</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>x.dims <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">900</span>, <span class="dv">4</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">prod</span>(x.dims), x.dims)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>dims <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>bm.array <span class="ot">&lt;-</span> rbenchmark<span class="sc">::</span><span class="fu">benchmark</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span> <span class="fu">sb_x.array</span>(x, idx, dims),</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="st">&quot;base R + abind&quot;</span> <span class="ot">=</span> abind<span class="sc">::</span><span class="fu">asub</span>(x, idx, dims),</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  <span class="at">replications =</span> <span class="fl">1e4</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="at">order =</span> <span class="cn">NULL</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="fu">print</span>(bm.array)</span></code></pre></div>
+<pre><code>#&gt;             test replications elapsed relative user.self sys.self user.child
+#&gt; 1        subsets        10000    9.55    1.000      4.33     0.61         NA
+#&gt; 2 base R + abind        10000    9.72    1.018      3.19     0.43         NA
+#&gt;   sys.child
+#&gt; 1        NA
+#&gt; 2        NA</code></pre>
+<p> </p>
+<h3 id="dataframe">Data.frame</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">seq_len</span>(n),</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="at">b =</span> <span class="fu">sample</span>(letters, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">seq_len</span>(n) <span class="sc">*</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="at">d =</span> <span class="fu">sample</span>(<span class="fu">rev</span>(letters), <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>)</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>colsel <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">4</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>bm.df <span class="ot">&lt;-</span> rbenchmark<span class="sc">::</span><span class="fu">benchmark</span>(</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span> <span class="fu">sb_x.data.frame</span>(x, <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, colsel),</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  <span class="st">&quot;base R&quot;</span> <span class="ot">=</span> x[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="fu">match</span>(colsel, <span class="fu">names</span>(x))],</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="at">replications =</span> <span class="fl">1e4</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="at">order =</span> <span class="cn">NULL</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>)</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="fu">print</span>(bm.df)</span></code></pre></div>
+<pre><code>#&gt;      test replications elapsed relative user.self sys.self user.child sys.child
+#&gt; 1 subsets        10000    0.37    1.000      0.19        0         NA        NA
+#&gt; 2  base R        10000    0.53    1.432      0.22        0         NA        NA</code></pre>
+<p> </p>
+<h2 id="see-also">See Also</h2>
+<p>‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’
+R-packages to ensure an acceptable performance of its functions despite
+the many checks that these functions perform. I also recommend using
+these packages for other subsetting and data wrangling functionalities.
+Besides these package, the following R packages work very nicely
+together with ‘subsets’:</p>
+<ul>
+<li><p>‘stringi’: THE R package for fast and concise string manipulation
+- an essential part of any programming language.</p></li>
+<li><p>‘abind’: Provides binding arrays along an arbitrary
+dimension.</p></li>
+<li><p>‘tinycodet’: Helps the user with their coding etiquette. Focuses
+on 4 aspects: (1) safe functionalities, (2) an import system that
+combines benefits of using without attaching and attaching a package,
+(3) extending the capabilities of the aforementioned ‘stringi’ package,
+(4) functions to reduce repetitive code.</p></li>
+</ul>
+<p> </p>
+<h2 id="changelog-experimental-versions">Changelog (EXPERIMENTAL
+VERSIONS)</h2>
+<ul>
+<li>31 October 2023: Very first GitHub upload. Also: Halloween!</li>
+<li>12 November 2023: Optimised the code more. Update the benchmarks
+with more representative sized objects. Merged <code>sb_rp()</code> and
+<code>sb_tf()</code> into <code>sb_mod()</code>, and added
+<code>sb_set()</code>. Placed explanations of the common indexing
+arguments in a separate help page for a better overview (and less typing
+for me). Replaced the <code>.attr</code> argument with the
+<code>rat</code> argument in <code>sb_x()</code> and
+<code>sb_rm()</code>. Added the <code>sub2ind</code> and
+<code>ind2sub</code> functions.</li>
+</ul>
+<p> </p>
+
+</body>
+</html>
