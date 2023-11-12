@@ -162,8 +162,6 @@ The main focus is on the following generic S3 methods:
 - `sb_set`: method to modify (transform or replace values) subsets of an
   object by **reference**.
 
-- `sb_rp`: method to replace values of subsets.
-
 - `sb_before`, `sb_after`: methods to insert new values before or after
   an index along a dimension of an object.
 
