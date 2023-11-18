@@ -347,6 +347,8 @@ together with ‘subsets’:
   functions.
 - 18 November 2023: Fixed several bugs in the `sb_set()` method. Added
   the `sb_coe()` method. Added considerably more tests. Expanded the
-  documentation a bit.
+  documentation a bit. Expanded the `sub2ind` - functions into 4 more
+  comprehensive functions. The `sb_str()` function now also has a
+  replacement method.
 
  
