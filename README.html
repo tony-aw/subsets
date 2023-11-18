@@ -682,8 +682,7 @@ types of data.frame-like objects. Powered by the subclass agnostic
 </ul></li>
 <li><p><em>Explicit copy semantics</em>:</p>
 <ul>
-<li><p>Sub-set operations that increase or decrease the number of
-elements in an object, and thus change its memory allocations, always
+<li><p>Sub-set operations that change its memory allocations, always
 return a modified copy of the object.</p></li>
 <li><p>For sub-set operations that just change values in-place (similar
 to the [&lt;- and [[&lt;- methods) the user can choose a method that
@@ -731,11 +730,13 @@ the functions are kept reasonably speedy, through the use of the ‘Rcpp’,
 <li><p><code>sb_x</code>: method to extract, exchange, or duplicate
 indices.</p></li>
 <li><p><code>sb_rm</code>: method to remove indices.</p></li>
+<li><p><code>sb_set</code>: method to modify (transform or replace
+values) subsets of an object by <strong>reference</strong>.</p></li>
 <li><p><code>sb_mod</code>: method to return a <strong>copy</strong> of
 an object with modified (transformed or replaced values)
 subsets.</p></li>
-<li><p><code>sb_set</code>: method to modify (transform or replace
-values) subsets of an object by <strong>reference</strong>.</p></li>
+<li><p><code>sb_coe</code>: coerce and transform a whole object, or a
+recursive subset of an object.</p></li>
 <li><p><code>sb_before</code>, <code>sb_after</code>: methods to insert
 new values before or after an index along a dimension of an
 object.</p></li>
@@ -762,8 +763,9 @@ provided:</p>
 generator.</p></li>
 <li><p><code>seq_names</code>: create a range of indices from a
 specified starting and ending name.</p></li>
-<li><p><code>sub2ind</code>, <code>ind2sub</code>: Convert subscripts
-(array indices) to flat indices, and vice-versa.</p></li>
+<li><p><code>sub2coord</code>, <code>coord2ind</code>: Convert
+subscripts (array indices) to coordinates, coordinates to flat indices,
+and vice-versa.</p></li>
 </ul>
 <p> </p>
 <h2 id="installing--loading">Installing &amp; Loading</h2>
@@ -881,6 +883,9 @@ for me). Replaced the <code>.attr</code> argument with the
 <code>rat</code> argument in <code>sb_x()</code> and
 <code>sb_rm()</code>. Added the <code>sub2ind</code> and
 <code>ind2sub</code> functions.</li>
+<li>18 November 2023: Fixed several bugs in the <code>sb_set()</code>
+method. Added the <code>sb_coe()</code> method. Added considerably more
+tests. Expanded the documentation a bit.</li>
 </ul>
 <p> </p>
 

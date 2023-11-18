@@ -93,8 +93,7 @@ following properties:
 
 - *Explicit copy semantics*:
 
-  - Sub-set operations that increase or decrease the number of elements
-    in an object, and thus change its memory allocations, always return
+  - Sub-set operations that change its memory allocations, always return
     a modified copy of the object.
 
   - For sub-set operations that just change values in-place (similar to
@@ -156,11 +155,14 @@ The main focus is on the following generic S3 methods:
 
 - `sb_rm`: method to remove indices.
 
+- `sb_set`: method to modify (transform or replace values) subsets of an
+  object by **reference**.
+
 - `sb_mod`: method to return a **copy** of an object with modified
   (transformed or replaced values) subsets.
 
-- `sb_set`: method to modify (transform or replace values) subsets of an
-  object by **reference**.
+- `sb_coe`: coerce and transform a whole object, or a recursive subset
+  of an object.
 
 - `sb_before`, `sb_after`: methods to insert new values before or after
   an index along a dimension of an object.
@@ -187,8 +189,8 @@ and indices (sometimes needed in sub-setting) are provided:
 - `seq_names`: create a range of indices from a specified starting and
   ending name.
 
-- `sub2ind`, `ind2sub`: Convert subscripts (array indices) to flat
-  indices, and vice-versa.
+- `sub2coord`, `coord2ind`: Convert subscripts (array indices) to
+  coordinates, coordinates to flat indices, and vice-versa.
 
  
 
@@ -343,5 +345,8 @@ together with ‘subsets’:
   less typing for me). Replaced the `.attr` argument with the `rat`
   argument in `sb_x()` and `sb_rm()`. Added the `sub2ind` and `ind2sub`
   functions.
+- 18 November 2023: Fixed several bugs in the `sb_set()` method. Added
+  the `sb_coe()` method. Added considerably more tests. Expanded the
+  documentation a bit.
 
  

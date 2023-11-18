@@ -109,8 +109,7 @@ These are (hopefully) easier sub-setting methods and functions with the followin
 
   * *Explicit copy semantics*:
 
-      * Sub-set operations that increase or decrease the number
-        of elements in an object, and thus change its memory
+      * Sub-set operations that change its memory
         allocations, always return a modified copy of the object.
 
       * For sub-set operations that just change values in-place
@@ -174,15 +173,18 @@ The main focus is on the following generic S3 methods:
   * `sb_x`: method to extract, exchange, or duplicate indices.
 
   * `sb_rm`: method to remove indices.
+  
+  * `sb_set`: method to modify
+    (transform or replace values)
+    subsets of an object by **reference**.
 
   * `sb_mod`: method to return a **copy**
      of an object with modified
      (transformed or replaced values)
      subsets.
     
-  * `sb_set`: method to modify
-    (transform or replace values)
-    subsets of an object by **reference**.
+  * `sb_coe`: coerce and transform a whole object,
+    or a recursive subset of an object.
 
   * `sb_before`, `sb_after`: methods to insert new values before or
     after an index along a dimension of an object.
@@ -212,7 +214,10 @@ sequences and indices (sometimes needed in sub-setting) are provided:
   * `seq_names`: create a range of indices from a specified
     starting and ending name.
     
-  * `sub2ind`, `ind2sub`: Convert subscripts (array indices) to flat indices,      and vice-versa.
+  * `sub2coord`, `coord2ind`: Convert subscripts
+    (array indices)
+    to coordinates,
+    coordinates to flat indices, and vice-versa.
 
 
 &nbsp;
@@ -362,6 +367,7 @@ together with 'subsets':
 
  - 31 October 2023: Very first GitHub upload. Also: Halloween!
  - 12 November 2023: Optimised the code more. Update the benchmarks with more representative sized objects. Merged `sb_rp()` and `sb_tf()` into `sb_mod()`, and added `sb_set()`. Placed explanations of the common indexing arguments in a separate help page for a better overview (and less typing for me). Replaced the `.attr` argument with the `rat` argument in `sb_x()` and `sb_rm()`. Added the `sub2ind` and `ind2sub` functions.
+ - 18 November 2023: Fixed several bugs in the `sb_set()` method. Added the `sb_coe()` method. Added considerably more tests. Expanded the documentation a bit.
  
  
 &nbsp;
