@@ -1,43 +1,37 @@
 #' Programmatically Friendly, Standard Evaluated aes() Function Alias
 #'
 #' @description
-#' Programmatically friendly version of 'ggplot2''s \link[ggplot2]{aes} function.
+#' Programmatically friendly version of \code{ggplot2""}\link[ggplot2]{aes} function.
 #' This function is programmatically friendly because it uses
 #' proper standard evaluation,
 #' instead of non-standard evaluation,
 #' tidy evaluation,
 #' or similar programmatically unfriendly evaluations. \cr
+#' 
 #'
+#'
+#' @param ... arguments to be passed to \link[ggplot2]{aes},
+#' but passed as formulas rather than non-standard evaluated dark magic. \cr
+#'
+#'
+#' 
 #' @details
-#' Non-Standard Evaluation (sometimes abbreviated as "NSE"),
-#' is quite controversial. \cr
-#' Consider the following example:
-#'
-#' ```{r echo=TRUE, eval = FALSE}
-#' aplot <- "ggplot2"
-#' library(aplot)
-#' ```
-#' What package will be attached? It will not be 'ggplot2',
-#' nor will an error occur.
-#' Instead, the package 'aplot' will be attached. \cr
-#' This is due to evaluating the expression 'aplot' as a quoted expression,
-#' instead of evaluating the contents (i.e. string or formula) of the variable.
-#' In other words: Non-Standard Evaluation. \cr
+#' Non-Standard Evaluation is quite controversial (see \link{subsets_NSE}). \cr
 #' \cr
-#' Often standard-evaluated alternatives are also provided.
+#' Often standard-evaluated alternatives provided. \cr
 #' But in the case of the \code{aes()} function in 'ggplot2',
 #' the standard-evaluated alternative changes frequently,
-#' the ones provided so far are rather clumsy. \cr
+#' and the ones provided so far are rather clumsy. \cr
 #' \cr
 #' The \code{aes_pro()} function is the standard evaluated alternative.
 #' Due to the way \code{aes_pro()} is programmed,
 #' it should work no matter how many times the standard evaluation techniques
-#' change in 'ggplot2'.
-#' It should also work in older and newer versions of 'ggplot2'.
+#' change in 'ggplot2'. \cr
+#' It should also work in older and newer versions of 'ggplot2'. \cr
+#' To support functions in combinations with references of the variables,
+#' the input used here are formula inputs, rather than character inputs. \cr
+#' See Examples section below.
 #'
-#'
-#' @param ... arguments to be passed to \link[ggplot2]{aes},
-#' except \code{aes_pro()} forces programmatically friendly standard evaluation.
 #'
 #' @return
 #' See \link[ggplot2]{aes}.
@@ -48,9 +42,9 @@
 #' 
 #'
 #' data("starwars", package = "dplyr")
-#' x <- "mass"
-#' y <- "height"
-#' color <- "sex"
+#' x <- ~ sqrt(mass)
+#' y <- ~ height
+#' color <- ~ sex
 #'
 #' ggplot2::ggplot(starwars, aes_pro(x, y, color = color)) +
 #'   ggplot2::geom_point()
@@ -60,12 +54,13 @@
 #' @export
 aes_pro <- function(...) {
   lst <- list(...)
-  check <- vapply(lst, is.character, logical(1))
+  is_formula <- function(x) inherits(x, "formula") && is.call(x) && x[[1]] == quote(`~`)
+  check <- vapply(lst, is_formula, logical(1))
   if(any(!check)) {
-    stop("character input must be given")
+    stop("formula inputs must be given")
   }
   args.names <- ifelse(names(lst)=="", "", paste0(names(lst), " = "))
-  args.values <- do.call(c, lst)
+  args.values <- vapply(lst, \(x)as.character(x)[2], character(1))
   args <- paste0(args.names, args.values, collapse = ", ")
   txt <- paste0("ggplot2::aes(", args, ")")
   message(txt)

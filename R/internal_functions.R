@@ -321,7 +321,7 @@
 #' @noRd
 .indx_make_filter <- function(x, filter, inv, abortcall) {
   
-  check_is_formula <- inherits(filter, "formula") & is.call(filter)
+  check_is_formula <- inherits(filter, "formula") && is.call(filter) && filter[[1]] == quote(`~`)
   if(!check_is_formula) {
     stop(simpleError("`filter` must be a formula", call = abortcall))
   }

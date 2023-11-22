@@ -365,6 +365,8 @@ together with ‘subsets’:
   consistent, and also expanded their documentation a bit. Added an
   expanded explanation of the classes for argument `x` in a separate
   help file for a better overview (and less typing for me). Added more
-  badges. Improved the tests a bit. Added an .onAttach() message.
+  badges. Improved the tests a bit. Added an `.onAttach()` message
+  function. The `aes_pro()` function now uses formula input rather than
+  character input.
 
  
