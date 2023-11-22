@@ -143,7 +143,8 @@ following properties:
 
 - *Performance aware*: Despite the many checks performed, the functions
   are kept reasonably speedy, through the use of the ‘Rcpp’, ‘collapse’,
-  and ‘data.table’ R-packages.
+  and ‘data.table’ R-packages. Most of the heavy lifting in this package
+  is done by the ‘collapse’ package.
 
  
 
@@ -191,6 +192,16 @@ and indices (sometimes needed in sub-setting) are provided:
 
 - `sub2coord`, `coord2ind`: Convert subscripts (array indices) to
   coordinates, coordinates to flat indices, and vice-versa.
+
+ 
+
+## Help pages
+
+For an explanation of the classes, and how each class is treated by
+‘subsets’, see `subsets_classes`.
+
+For an explanation of the common indexing arguments in the generic
+methods, see `subsets_indx_args`.
 
  
 
@@ -350,5 +361,10 @@ together with ‘subsets’:
   documentation a bit. Expanded the `sub2ind` - functions into 4 more
   comprehensive functions. The `sb_str()` function now also has a
   replacement method.
+- 22 November 2023: Made the arguments in the `sub2ind` - functions more
+  consistent, and also expanded their documentation a bit. Added an
+  expanded explanation of the classes for argument `x` in a separate
+  help file for a better overview (and less typing for me). Added more
+  badges. Improved the tests a bit. Added an .onAttach() message.
 
  

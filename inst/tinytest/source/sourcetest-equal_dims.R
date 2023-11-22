@@ -1,0 +1,41 @@
+
+
+# uniquely named matrix ====
+x <- matrix(as.double(-sample.int(16)), nrow = 4, ncol=4)
+rownames(x) <- letters[1:4]
+colnames(x) <- letters[1:4]
+row <- indx_named
+col <- indx_named
+temp.fun.matrix(x, row, col)
+
+
+# unnamed matrix ====
+x <- matrix(as.double(-sample.int(16)), nrow = 4, ncol=4)
+row <- indx_general
+col <- indx_general
+temp.fun.matrix(x, row, col)
+
+
+# non-uniquely named matrix ====
+x <- matrix(as.double(-sample.int(16)), nrow = 4, ncol=4)
+rownames(x) <- c("a", "a", "b", NA)
+colnames(x) <- c("a", "a", "b", NA)
+row <- indx_named
+col <- indx_named
+temp.fun.matrix(x, row, col)
+if(isTRUE(test_allow_duplicates)) {
+  expect_equal(
+    sb_x(x, row = c("a", "a", "a")),
+    rep3.bind(x[which(rownames(x) %in% "a"), ], 1)
+  ) |> errorfun()
+}
+if(isTRUE(test_allow_duplicates)) {
+  expect_equal(
+    sb_x(x, col = c("a", "a", "a")),
+    rep3.bind(x[, which(colnames(x) %in% "a")], 2)
+  ) |> errorfun()
+}
+
+
+
+

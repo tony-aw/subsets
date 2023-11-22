@@ -2,7 +2,7 @@ Package: subsets
 Type: Package
 Title: Grammar of Subsets
 Version: 0.0.0.9
-Date: 2023-10-13
+Date: 2023-11-22
 Authors@R: 
     person("Tony", "Wilkes",
            email = "tony_a_wilkes@outlook.com",

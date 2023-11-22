@@ -163,6 +163,7 @@ These are (hopefully) easier sub-setting methods and functions with the followin
     Despite the many checks performed, the functions are kept
     reasonably speedy, through the use of the 'Rcpp', 'collapse',
     and 'data.table' R-packages.
+    Most of the heavy lifting in this package is done by the 'collapse' package.
 
 &nbsp;
 
@@ -219,6 +220,15 @@ sequences and indices (sometimes needed in sub-setting) are provided:
     to coordinates,
     coordinates to flat indices, and vice-versa.
 
+&nbsp;
+
+## Help pages
+
+For an explanation of the classes, and how each class is treated by 'subsets',
+see `subsets_classes`.
+
+For an explanation of the common indexing arguments in the generic methods,
+see `subsets_indx_args`.
 
 &nbsp;
 
@@ -368,6 +378,7 @@ together with 'subsets':
  - 31 October 2023: Very first GitHub upload. Also: Halloween!
  - 12 November 2023: Optimised the code more. Update the benchmarks with more representative sized objects. Merged `sb_rp()` and `sb_tf()` into `sb_mod()`, and added `sb_set()`. Placed explanations of the common indexing arguments in a separate help page for a better overview (and less typing for me). Replaced the `.attr` argument with the `rat` argument in `sb_x()` and `sb_rm()`. Added the `sub2ind` and `ind2sub` functions.
  - 18 November 2023: Fixed several bugs in the `sb_set()` method. Added the `sb_coe()` method. Added considerably more tests. Expanded the documentation a bit. Expanded the `sub2ind` - functions into 4 more comprehensive functions. The `sb_str()` function now also has a replacement method.
+ - 22 November 2023: Made the arguments in the `sub2ind` - functions more consistent, and also expanded their documentation a bit. Added an expanded explanation of the classes for argument `x` in a separate help file for a better overview (and less typing for me). Added more badges. Improved the tests a bit. Added an .onAttach() message.
  
  
 &nbsp;
