@@ -329,24 +329,6 @@ summary(bm.df, relative = TRUE)
 
  
 
-### Plots
-
-Plots of the benchmarks, same as the tables above.
-
-``` r
-library(ggplot2)
-library(patchwork)
-ggp.mat <- autoplot(bm.matrix) + ggtitle("matrix")
-#> Loading required namespace: tidyr
-ggp.3d <- autoplot(bm.3d) + ggtitle("3d array")
-ggp.df <- autoplot(bm.df) + ggtitle("data.frame")
-ggp.mat / ggp.3d / ggp.df
-```
-
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
-
- 
-
 ## See Also
 
 ‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’ R-packages
