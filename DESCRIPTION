@@ -15,12 +15,12 @@ Description: Subsetting methods for various data-types.
     3) Class consistent.
     4) Careful handling of names and other attributes.
     5) Performance aware.
-    6) Support vector-like atomic objects (vectors, matrices, arrays).
+    6) Support atomic objects (vectors, matrices, arrays).
     7) Support factors.
     8) Support lists.
     9) Support data.frame-like objects (data.frame, data.table, tibble, tidytable).
     10) Support ggplot2 aesthetics.
-License: GPL (>= 2)
+License: MIT + file LICENSE
 LinkingTo: Rcpp
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3

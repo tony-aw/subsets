@@ -21,7 +21,7 @@ subsets: an Easy Grammar of Subsets
     Among programming languages, 'R' has perhaps one of the most
     flexible and comprehensive sub-setting functionality. But with
     flexibility often comes confusion and (apparent) inconsistencies.
-    And R is no exception.
+    And 'R' is no exception.
 
     This becomes quite apparent when one reads (online) documents such
     as "The R Inferno" by Patrick Burns, and "Frustration: One Year
@@ -29,7 +29,7 @@ subsets: an Easy Grammar of Subsets
     inconsistencies, and sub-setting related inconsistencies make up a
     good portion of these documents.
 
-    To my surprise, there is no comprehensive R package (as far as I
+    To my surprise, there is no comprehensive R-package (as far as I
     could see at least) that actually attempts to "fix" the
     subset-related issues laid out in these and other such documents.
 
@@ -49,10 +49,10 @@ subsets: an Easy Grammar of Subsets
 
 ## Goal & Properties
 
-The Goal of the ‘subsets’ package is NOT to replace the square-brackets
-operators (`[`, `[[`, `[<-`, and `[[<-`), but to provide **alternative**
-sub-setting methods and functions, to be used in situations where the
-square-brackets operators are inconvenient.
+The Goal of the ‘subsets’ package is not to replace the square-brackets
+operators (`[`, `[[`, `[<-`, and `[[<-`) per-sé, but to provide
+**alternative** sub-setting methods and functions, to be used in
+situations where the square-brackets operators are inconvenient.
 
 These are (hopefully) easier sub-setting methods and functions with the
 following properties:
@@ -89,8 +89,6 @@ following properties:
     data.frame-like objects. Powered by the subclass agnostic ‘C’-code
     from ‘collapse’ and ‘data.table’.
 
-  - Smart with sub-setting recursive lists.
-
 - *Explicit copy semantics*:
 
   - Sub-set operations that change its memory allocations, always return
@@ -98,34 +96,32 @@ following properties:
 
   - For sub-set operations that just change values in-place (similar to
     the \[\<- and \[\[\<- methods) the user can choose a method that
-    modify the object by *reference*, or choose a method that return a
-    *deep copy*.
+    modifies the object by *reference*, or choose a method that returns
+    a *deep copy*.
 
 - *Careful handling of names and other attributes*:
 
-  - Sub-setting object by index names returns ALL indices with that
+  - Sub-setting an object by index names returns ALL indices with that
     name, not just the first.
 
   - Data.frame-like objects (see supported classes below) are forced to
     have unique column names.
-
-  - Selecting non-existing names always gives an error.
 
   - Attributes of data.frame-like objects (see supported classes below)
     are always preserved when sub-setting.
 
   - For other object types, the user can specify whether to preserve
     Attributes, or use R’s `[` attribute behaviour (i.e. drop most
-    attributes). This is to ensure compatibility with R packages that
+    attributes). This is to ensure compatibility with R-packages that
     create their own attribute behaviour for sub-setting.
 
-- *Support a wide variety of data types*:
+- *Support a wide variety of S3 classes*:
 
-  - Support vector-like (atomic) objects (vectors, matrices, arrays).
-
-  - Support lists.
+  - Support atomic objects (vectors, matrices, arrays).
 
   - Support factors.
+
+  - Support lists.
 
   - Support the following data.frame-like objects: data.frame,
     data.table, tibble, and tidytable class, and objects derived from
@@ -152,45 +148,46 @@ following properties:
 
 The main focus is on the following generic S3 methods:
 
-- `sb_x`: method to extract, exchange, or duplicate indices.
+- `sb_x()`: method to extract, exchange, or duplicate indices.
 
-- `sb_rm`: method to remove indices.
+- `sb_rm()`: method to remove indices.
 
-- `sb_set`: method to modify (transform or replace values) subsets of an
-  object by **reference**.
+- `sb_set()`: method to modify (transform or replace values) subsets of
+  an object by **reference**.
 
-- `sb_mod`: method to return a **copy** of an object with modified
+- `sb_mod()`: method to return a **copy** of an object with modified
   (transformed or replaced values) subsets.
 
-- `sb_coe`: coerce and transform a whole object, or a recursive subset
+- `sb_coe()`: coerce and transform a whole object, or a recursive subset
   of an object.
 
-- `sb_before`, `sb_after`: methods to insert new values before or after
-  an index along a dimension of an object.
+- `sb_before()`, `sb_after()`: methods to insert new values before or
+  after an index along a dimension of an object.
 
-- `sb_rec`: not actually a method, but a function that can be combined
+- `sb_rec()`: not actually a method, but a function that can be combined
   with the above methods, for recursive sub-setting operations.
 
 Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:
 
-- `aes_pro`: programmatically friendly and stable version of ggplot2’s
-  aesthetic sub-setting function.
+- `aes_pro()`: programmatically friendly and stable version of the
+  `ggplot2::aes()` function.
 
-- `sb_str`: extract or replace a subset of characters of a single string
-  (each single character is treated as a single element).
+- `sb_str()`: extract or replace a subset of characters of a single
+  string (each single character is treated as a single element).
 
-- `sb_a`: extract multiple attributes from an object.
+- `sb_a()`: extract multiple attributes from an object.
 
 And finally, a couple of helper functions for creating ranges, sequences
-and indices (sometimes needed in sub-setting) are provided:
+and indices (often needed in sub-setting) are provided:
 
-- `seq_rec`: Generalized recursive sequence generator.
+- `seq_rec()`: Recursive sequence generator (for example to generate a
+  Fibonacci sequence)
 
-- `seq_names`: create a range of indices from a specified starting and
+- `seq_names()`: create a range of indices from a specified starting and
   ending name.
 
-- `sub2coord`, `coord2ind`: Convert subscripts (array indices) to
+- `sub2coord()`, `coord2ind()`: Convert subscripts (array indices) to
   coordinates, coordinates to flat indices, and vice-versa.
 
  
@@ -266,9 +263,13 @@ bm.matrix <- rbenchmark::benchmark(
 print(bm.matrix)
 ```
 
-    #>      test replications elapsed relative user.self sys.self user.child sys.child
-    #> 1 subsets       100000    3.06     1.01      1.61     0.08         NA        NA
-    #> 2  base R       100000    3.03     1.00      1.66     0.03         NA        NA
+    #> # A tibble: 2 × 13
+    #>   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
+    #>   <bnch_xpr> <bench_tm> <bench_tm>     <dbl> <bnch_byt>    <dbl> <int> <dbl>
+    #> 1 <language> 0.0010870  0.00117675      807. 3384520        42.1  9504   496
+    #> 2 <language> 0.0015445  0.00169170      572. 3113056        35.7  9412   588
+    #> # ℹ 5 more variables: total_time <bench_tm>, result <list>, memory <list>,
+    #> #   time <list>, gc <list>
 
  
 
@@ -318,9 +319,13 @@ bm.df <- rbenchmark::benchmark(
 print(bm.df)
 ```
 
-    #>      test replications elapsed relative user.self sys.self user.child sys.child
-    #> 1 subsets        10000    0.37    1.000      0.19        0         NA        NA
-    #> 2  base R        10000    0.53    1.432      0.22        0         NA        NA
+    #> # A tibble: 2 × 13
+    #>   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
+    #>   <bnch_xpr> <bench_tm> <bench_tm>     <dbl> <bnch_byt>    <dbl> <int> <dbl>
+    #> 1 <language> 0.0001007  0.0001573      5768. 336312         1.73  9997     3
+    #> 2 <language> 0.0002801  0.0003087      2841. 371200         1.14  9996     4
+    #> # ℹ 5 more variables: total_time <bench_tm>, result <list>, memory <list>,
+    #> #   time <list>, gc <list>
 
  
 
@@ -329,7 +334,7 @@ print(bm.df)
 ‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’ R-packages
 to ensure an acceptable performance of its functions despite the many
 checks that these functions perform. I also recommend using these
-packages for other subsetting and data wrangling functionalities.
+packages for other sub-setting and data wrangling functionalities.
 Besides these package, the following R packages work very nicely
 together with ‘subsets’:
 
@@ -368,5 +373,17 @@ together with ‘subsets’:
   badges. Improved the tests a bit. Added an `.onAttach()` message
   function. The `aes_pro()` function now uses formula input rather than
   character input.
+- 27 November 2023: Added the `rcl` argument to the `sb_*.array()`
+  methods, specifically for 3-dimensional arrays. Produced more tests,
+  and re-organised the tests. Added the `with_pro()` function, which -
+  like `aes_pro()` - is the programmatically friendly version of
+  `with()`, and works with a formula instead of expression. Added
+  reference to ‘abind’ in bibliography of the `sb_before()` and
+  `sb_after()` methods. Normalized the order of the classes in the
+  documentation of all the generic methods of ‘subsets’. Added the `n()`
+  function, as short-hand for `list()`, and also functions as the nested
+  version of `c()`. Added an additional help page explaining
+  Non-Standard Evaluation (NSE); ‘subsets’ avoids the usage of NSE
+  whenever possible.
 
  

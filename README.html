@@ -617,7 +617,7 @@ padding-top: 0px;
 <pre><code>Among programming languages, &#39;R&#39; has perhaps one of the most
 flexible and comprehensive sub-setting functionality. But with
 flexibility often comes confusion and (apparent) inconsistencies.
-And R is no exception.
+And &#39;R&#39; is no exception.
 
 This becomes quite apparent when one reads (online) documents such
 as &quot;The R Inferno&quot; by Patrick Burns, and &quot;Frustration: One Year
@@ -625,7 +625,7 @@ With R&quot; by Reece Goding. These documents point out many
 inconsistencies, and sub-setting related inconsistencies make up a
 good portion of these documents.
 
-To my surprise, there is no comprehensive R package (as far as I
+To my surprise, there is no comprehensive R-package (as far as I
 could see at least) that actually attempts to &quot;fix&quot; the
 subset-related issues laid out in these and other such documents.
 
@@ -642,9 +642,9 @@ and found themselves confused, I trust this package will be useful
 even for those who are quite experienced in &#39;R&#39;.</code></pre>
 <p> </p>
 <h2 id="goal--properties">Goal &amp; Properties</h2>
-<p>The Goal of the ‘subsets’ package is NOT to replace the
+<p>The Goal of the ‘subsets’ package is not to replace the
 square-brackets operators (<code>[</code>, <code>[[</code>,
-<code>[&lt;-</code>, and <code>[[&lt;-</code>), but to provide
+<code>[&lt;-</code>, and <code>[[&lt;-</code>) per-sé, but to provide
 <strong>alternative</strong> sub-setting methods and functions, to be
 used in situations where the square-brackets operators are
 inconvenient.</p>
@@ -678,7 +678,6 @@ data.tables, tibbles, and tidytables. No longer does one have to
 re-learn the different brackets-based sub-setting rules for different
 types of data.frame-like objects. Powered by the subclass agnostic
 ‘C’-code from ‘collapse’ and ‘data.table’.</p></li>
-<li><p>Smart with sub-setting recursive lists.</p></li>
 </ul></li>
 <li><p><em>Explicit copy semantics</em>:</p>
 <ul>
@@ -686,29 +685,27 @@ types of data.frame-like objects. Powered by the subclass agnostic
 return a modified copy of the object.</p></li>
 <li><p>For sub-set operations that just change values in-place (similar
 to the [&lt;- and [[&lt;- methods) the user can choose a method that
-modify the object by <em>reference</em>, or choose a method that return
-a <em>deep copy</em>.</p></li>
+modifies the object by <em>reference</em>, or choose a method that
+returns a <em>deep copy</em>.</p></li>
 </ul></li>
 <li><p><em>Careful handling of names and other attributes</em>:</p>
 <ul>
-<li><p>Sub-setting object by index names returns ALL indices with that
-name, not just the first.</p></li>
+<li><p>Sub-setting an object by index names returns ALL indices with
+that name, not just the first.</p></li>
 <li><p>Data.frame-like objects (see supported classes below) are forced
 to have unique column names.</p></li>
-<li><p>Selecting non-existing names always gives an error.</p></li>
 <li><p>Attributes of data.frame-like objects (see supported classes
 below) are always preserved when sub-setting.</p></li>
 <li><p>For other object types, the user can specify whether to preserve
 Attributes, or use R’s <code>[</code> attribute behaviour (i.e. drop
-most attributes). This is to ensure compatibility with R packages that
+most attributes). This is to ensure compatibility with R-packages that
 create their own attribute behaviour for sub-setting.</p></li>
 </ul></li>
-<li><p><em>Support a wide variety of data types</em>:</p>
+<li><p><em>Support a wide variety of S3 classes</em>:</p>
 <ul>
-<li><p>Support vector-like (atomic) objects (vectors, matrices,
-arrays).</p></li>
-<li><p>Support lists.</p></li>
+<li><p>Support atomic objects (vectors, matrices, arrays).</p></li>
 <li><p>Support factors.</p></li>
+<li><p>Support lists.</p></li>
 <li><p>Support the following data.frame-like objects: data.frame,
 data.table, tibble, and tidytable class, and objects derived from these
 classes.</p></li>
@@ -728,43 +725,42 @@ this package is done by the ‘collapse’ package.</p></li>
 <h2 id="methods-and-functions">Methods and Functions</h2>
 <p>The main focus is on the following generic S3 methods:</p>
 <ul>
-<li><p><code>sb_x</code>: method to extract, exchange, or duplicate
+<li><p><code>sb_x()</code>: method to extract, exchange, or duplicate
 indices.</p></li>
-<li><p><code>sb_rm</code>: method to remove indices.</p></li>
-<li><p><code>sb_set</code>: method to modify (transform or replace
+<li><p><code>sb_rm()</code>: method to remove indices.</p></li>
+<li><p><code>sb_set()</code>: method to modify (transform or replace
 values) subsets of an object by <strong>reference</strong>.</p></li>
-<li><p><code>sb_mod</code>: method to return a <strong>copy</strong> of
-an object with modified (transformed or replaced values)
+<li><p><code>sb_mod()</code>: method to return a <strong>copy</strong>
+of an object with modified (transformed or replaced values)
 subsets.</p></li>
-<li><p><code>sb_coe</code>: coerce and transform a whole object, or a
+<li><p><code>sb_coe()</code>: coerce and transform a whole object, or a
 recursive subset of an object.</p></li>
-<li><p><code>sb_before</code>, <code>sb_after</code>: methods to insert
-new values before or after an index along a dimension of an
+<li><p><code>sb_before()</code>, <code>sb_after()</code>: methods to
+insert new values before or after an index along a dimension of an
 object.</p></li>
-<li><p><code>sb_rec</code>: not actually a method, but a function that
+<li><p><code>sb_rec()</code>: not actually a method, but a function that
 can be combined with the above methods, for recursive sub-setting
 operations.</p></li>
 </ul>
 <p>Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:</p>
 <ul>
-<li><p><code>aes_pro</code>: programmatically friendly and stable
-version of ggplot2’s aesthetic sub-setting function.</p></li>
-<li><p><code>sb_str</code>: extract or replace a subset of characters of
-a single string (each single character is treated as a single
+<li><p><code>aes_pro()</code>: programmatically friendly and stable
+version of the <code>ggplot2::aes()</code> function.</p></li>
+<li><p><code>sb_str()</code>: extract or replace a subset of characters
+of a single string (each single character is treated as a single
 element).</p></li>
-<li><p><code>sb_a</code>: extract multiple attributes from an
+<li><p><code>sb_a()</code>: extract multiple attributes from an
 object.</p></li>
 </ul>
 <p>And finally, a couple of helper functions for creating ranges,
-sequences and indices (sometimes needed in sub-setting) are
-provided:</p>
+sequences and indices (often needed in sub-setting) are provided:</p>
 <ul>
-<li><p><code>seq_rec</code>: Generalized recursive sequence
-generator.</p></li>
-<li><p><code>seq_names</code>: create a range of indices from a
+<li><p><code>seq_rec()</code>: Recursive sequence generator (for example
+to generate a Fibonacci sequence)</p></li>
+<li><p><code>seq_names()</code>: create a range of indices from a
 specified starting and ending name.</p></li>
-<li><p><code>sub2coord</code>, <code>coord2ind</code>: Convert
+<li><p><code>sub2coord()</code>, <code>coord2ind()</code>: Convert
 subscripts (array indices) to coordinates, coordinates to flat indices,
 and vice-versa.</p></li>
 </ul>
@@ -814,9 +810,13 @@ factors.</p>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="at">order =</span> <span class="cn">NULL</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>)</span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">print</span>(bm.matrix)</span></code></pre></div>
-<pre><code>#&gt;      test replications elapsed relative user.self sys.self user.child sys.child
-#&gt; 1 subsets       100000    3.06     1.01      1.61     0.08         NA        NA
-#&gt; 2  base R       100000    3.03     1.00      1.66     0.03         NA        NA</code></pre>
+<pre><code>#&gt; # A tibble: 2 × 13
+#&gt;   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
+#&gt;   &lt;bnch_xpr&gt; &lt;bench_tm&gt; &lt;bench_tm&gt;     &lt;dbl&gt; &lt;bnch_byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+#&gt; 1 &lt;language&gt; 0.0010870  0.00117675      807. 3384520        42.1  9504   496
+#&gt; 2 &lt;language&gt; 0.0015445  0.00169170      572. 3113056        35.7  9412   588
+#&gt; # ℹ 5 more variables: total_time &lt;bench_tm&gt;, result &lt;list&gt;, memory &lt;list&gt;,
+#&gt; #   time &lt;list&gt;, gc &lt;list&gt;</code></pre>
 <p> </p>
 <h3 id="array-4d">Array (4D)</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>x.dims <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">900</span>, <span class="dv">4</span>)</span>
@@ -854,15 +854,19 @@ factors.</p>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="at">order =</span> <span class="cn">NULL</span></span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>)</span>
 <span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="fu">print</span>(bm.df)</span></code></pre></div>
-<pre><code>#&gt;      test replications elapsed relative user.self sys.self user.child sys.child
-#&gt; 1 subsets        10000    0.37    1.000      0.19        0         NA        NA
-#&gt; 2  base R        10000    0.53    1.432      0.22        0         NA        NA</code></pre>
+<pre><code>#&gt; # A tibble: 2 × 13
+#&gt;   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
+#&gt;   &lt;bnch_xpr&gt; &lt;bench_tm&gt; &lt;bench_tm&gt;     &lt;dbl&gt; &lt;bnch_byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+#&gt; 1 &lt;language&gt; 0.0001007  0.0001573      5768. 336312         1.73  9997     3
+#&gt; 2 &lt;language&gt; 0.0002801  0.0003087      2841. 371200         1.14  9996     4
+#&gt; # ℹ 5 more variables: total_time &lt;bench_tm&gt;, result &lt;list&gt;, memory &lt;list&gt;,
+#&gt; #   time &lt;list&gt;, gc &lt;list&gt;</code></pre>
 <p> </p>
 <h2 id="see-also">See Also</h2>
 <p>‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’
 R-packages to ensure an acceptable performance of its functions despite
 the many checks that these functions perform. I also recommend using
-these packages for other subsetting and data wrangling functionalities.
+these packages for other sub-setting and data wrangling functionalities.
 Besides these package, the following R packages work very nicely
 together with ‘subsets’:</p>
 <ul>
@@ -903,6 +907,19 @@ in a separate help file for a better overview (and less typing for me).
 Added more badges. Improved the tests a bit. Added an
 <code>.onAttach()</code> message function. The <code>aes_pro()</code>
 function now uses formula input rather than character input.</li>
+<li>27 November 2023: Added the <code>rcl</code> argument to the
+<code>sb_*.array()</code> methods, specifically for 3-dimensional
+arrays. Produced more tests, and re-organised the tests. Added the
+<code>with_pro()</code> function, which - like <code>aes_pro()</code> -
+is the programmatically friendly version of <code>with()</code>, and
+works with a formula instead of expression. Added reference to ‘abind’
+in bibliography of the <code>sb_before()</code> and
+<code>sb_after()</code> methods. Normalized the order of the classes in
+the documentation of all the generic methods of ‘subsets’. Added the
+<code>n()</code> function, as short-hand for <code>list()</code>, and
+also functions as the nested version of <code>c()</code>. Added an
+additional help page explaining Non-Standard Evaluation (NSE); ‘subsets’
+avoids the usage of NSE whenever possible.</li>
 </ul>
 <p> </p>
 
