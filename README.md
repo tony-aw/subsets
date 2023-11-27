@@ -171,7 +171,7 @@ Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:
 
 - `aes_pro()`: programmatically friendly and stable version of the
-  `ggplot2::aes()` function.
+  `aes()` function.
 
 - `sb_str()`: extract or replace a subset of characters of a single
   string (each single character is treated as a single element).
@@ -238,94 +238,112 @@ friendly, the functions are almost necessarily slower than base R’s
 `[`-like operators.
 
 However, a considerable effort was made to keep the speed loss to a
-minimum. The exact speed loss depends on the situation. For example, the
-`subsets::` functions are about as fast as base R when sub-setting using
-names, but base R is faster when sub-setting matrices using only
-numbers. But sub-setting data.frames are actually faster with the
-`subsets::` functions than in base R.
+minimum. Generally, the speed loss is indeed neglible, and in some cases
+there is even speed improvement (thanks to the heavy lifting performed
+by the ‘collapse’ pakackage).
 
 Below are some benchmarks to give one an idea of the speed loss. These
 are just examples; speed is determined by a great number of factors.
 
  
 
+``` r
+library(bench)
+library(ggplot2)
+```
+
 ### Matrix
 
 ``` r
-x <- matrix(seq_len(1000*900), ncol = 900)
-colnames(x) <- sample(c(letters, NA), 900, TRUE)
-bm.matrix <- rbenchmark::benchmark(
-  "subsets" = sb_x.matrix(x, 1:100, c("a", "a")),
-  "base R" = x[1:100, lapply(c("a", "a"), \(i) which(colnames(x) == i)) |> unlist(), drop = FALSE],
-  replications = 1e5,
-  order = NULL
+x.mat <- matrix(seq_len(1000*1000), ncol = 1000)
+colnames(x.mat) <- sample(c(letters, NA), 1000, TRUE)
+sel.rows <- 1:100
+sel.cols <- rep(sample(letters[1:13]), 10)
+bm.matrix <- bench::mark(
+  "subsets" = sb_x.matrix(x.mat, sel.rows, sel.cols),
+  "base R" = x.mat[sel.rows, lapply(sel.cols, \(i) which(colnames(x.mat) == i)) |> unlist(), drop = FALSE],
+  min_iterations = 1e4
 )
-print(bm.matrix)
+summary(bm.matrix, relative = TRUE)
 ```
 
-    #> # A tibble: 2 × 13
-    #>   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
-    #>   <bnch_xpr> <bench_tm> <bench_tm>     <dbl> <bnch_byt>    <dbl> <int> <dbl>
-    #> 1 <language> 0.0010870  0.00117675      807. 3384520        42.1  9504   496
-    #> 2 <language> 0.0015445  0.00169170      572. 3113056        35.7  9412   588
-    #> # ℹ 5 more variables: total_time <bench_tm>, result <list>, memory <list>,
-    #> #   time <list>, gc <list>
+    #> # A tibble: 2 × 6
+    #>   expression   min median `itr/sec` mem_alloc `gc/sec`
+    #>   <bch:expr> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+    #> 1 subsets     1      1         1.41      1.09     1.18
+    #> 2 base R      1.42   1.44      1         1        1
 
  
 
-### Array (4D)
+### Array (3D)
 
 ``` r
 x.dims <- c(1000, 900, 4)
-x <- array(1:prod(x.dims), x.dims)
-idx <- list(1:100, c(TRUE, TRUE, TRUE, FALSE))
-dims <- c(1, 3)
-bm.array <- rbenchmark::benchmark(
-  "subsets" = sb_x.array(x, idx, dims),
-  "base R + abind" = abind::asub(x, idx, dims),
-  replications = 1e4,
-  order = NULL
+x.3d <- array(1:prod(x.dims), x.dims)
+sel.rows <- 1:900
+sel.lyrs <- c(TRUE, FALSE, TRUE, FALSE)
+bm.3d <- bench::mark(
+  "subsets" =  sb_x.array(x.3d, rcl = n(sel.rows, NULL, sel.lyrs)),
+  "base R + abind" = abind::asub(x.3d, idx = list(sel.rows, sel.lyrs), dims = c(1,3)),
+  min_iterations = 1e4
 )
-print(bm.array)
+summary(bm.3d, relative = TRUE)
 ```
 
-    #>             test replications elapsed relative user.self sys.self user.child
-    #> 1        subsets        10000    9.55    1.000      4.33     0.61         NA
-    #> 2 base R + abind        10000    9.72    1.018      3.19     0.43         NA
-    #>   sys.child
-    #> 1        NA
-    #> 2        NA
+    #> # A tibble: 2 × 6
+    #>   expression       min median `itr/sec` mem_alloc `gc/sec`
+    #>   <bch:expr>     <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+    #> 1 subsets         1      1         1.01      1.00     1.03
+    #> 2 base R + abind  1.00   1.02      1         1        1
 
  
 
 ### Data.frame
 
 ``` r
-
-n <- 1e6
-x <- data.frame(
-  a = seq_len(n),
-  b = sample(letters, size = n, replace = TRUE),
-  c = seq_len(n) * -1,
-  d = sample(rev(letters), size = n, replace = TRUE)
+n <- 1e5
+chrmat <- matrix(
+  sample(letters, n*400, replace = TRUE), ncol = 400
 )
-colsel <- rep("a", 4)
-bm.df <- rbenchmark::benchmark(
-  "subsets" = sb_x.data.frame(x, 1:1000, colsel),
-  "base R" = x[1:1000, match(colsel, names(x))],
-  replications = 1e4,
-  order = NULL
+intmat <- matrix(
+  seq.int(n*400), ncol = 400
 )
-print(bm.df)
+x <- cbind(chrmat, intmat) |> as.data.frame()
+rm(list = c("chrmat", "intmat"))
+colnames(x) <- make.names(colnames(x), unique = TRUE)
+sel.cols <- rep(sample(names(x), 10), 4)
+sel.rows <- 1:1000
+bm.df <- bench::mark(
+  "subsets" = sb_x.data.frame(x, sel.rows, sel.cols),
+  "base R" = x[sel.rows, match(sel.cols, names(x)), drop = FALSE],
+  min_iterations = 1e4
+)
+summary(bm.df, relative = TRUE)
 ```
 
-    #> # A tibble: 2 × 13
-    #>   expression min        median     `itr/sec` mem_alloc  `gc/sec` n_itr  n_gc
-    #>   <bnch_xpr> <bench_tm> <bench_tm>     <dbl> <bnch_byt>    <dbl> <int> <dbl>
-    #> 1 <language> 0.0001007  0.0001573      5768. 336312         1.73  9997     3
-    #> 2 <language> 0.0002801  0.0003087      2841. 371200         1.14  9996     4
-    #> # ℹ 5 more variables: total_time <bench_tm>, result <list>, memory <list>,
-    #> #   time <list>, gc <list>
+    #> # A tibble: 2 × 6
+    #>   expression   min median `itr/sec` mem_alloc `gc/sec`
+    #>   <bch:expr> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+    #> 1 subsets     1      1         2.03      1        1.52
+    #> 2 base R      2.78   1.96      1         1.10     1
+
+ 
+
+### Plots
+
+Plots of the benchmarks, same as the tables above.
+
+``` r
+library(ggplot2)
+library(patchwork)
+ggp.mat <- autoplot(bm.matrix) + ggtitle("matrix")
+#> Loading required namespace: tidyr
+ggp.3d <- autoplot(bm.3d) + ggtitle("3d array")
+ggp.df <- autoplot(bm.df) + ggtitle("data.frame")
+ggp.mat / ggp.3d / ggp.df
+```
+
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
  
 
@@ -335,13 +353,15 @@ print(bm.df)
 to ensure an acceptable performance of its functions despite the many
 checks that these functions perform. I also recommend using these
 packages for other sub-setting and data wrangling functionalities.
+‘subsets’ uses a modified version of the `abind::abind()` function from
+the ‘abind’ R-package. This R-package is recommended for binding and
+sub-filling arrays of arbitrary dimensions.
+
 Besides these package, the following R packages work very nicely
 together with ‘subsets’:
 
 - ‘stringi’: THE R package for fast and concise string manipulation - an
   essential part of any programming language.
-
-- ‘abind’: Provides binding arrays along an arbitrary dimension.
 
 - ‘tinycodet’: Helps the user with their coding etiquette. Focuses on 4
   aspects: (1) safe functionalities, (2) an import system that combines
