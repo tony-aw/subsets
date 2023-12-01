@@ -625,8 +625,8 @@ With R&quot; by Reece Goding. These documents point out many
 inconsistencies, and sub-setting related inconsistencies make up a
 good portion of these documents.
 
-To my surprise, there is no comprehensive R-package (as far as I
-could see at least) that actually attempts to &quot;fix&quot; the
+To my surprise, there is no comprehensive R-package
+(as far as I could see at least) that actually attempts to &quot;fix&quot; the
 subset-related issues laid out in these and other such documents.
 
 Famous subset-related R packages such as &#39;dplyr&#39; and &#39;data.table&#39;
@@ -725,28 +725,31 @@ this package is done by the ‘collapse’ package.</p></li>
 <h2 id="methods-and-functions">Methods and Functions</h2>
 <p>The main focus is on the following generic S3 methods:</p>
 <ul>
-<li><p><code>sb_x()</code>: method to extract, exchange, or duplicate
-indices.</p></li>
-<li><p><code>sb_rm()</code>: method to remove indices.</p></li>
-<li><p><code>sb_set()</code>: method to modify (transform or replace
-values) subsets of an object by <strong>reference</strong>.</p></li>
-<li><p><code>sb_mod()</code>: method to return a <strong>copy</strong>
-of an object with modified (transformed or replaced values)
+<li><p><code>sb_x()</code>: S3 method to extract, exchange, or duplicate
 subsets.</p></li>
-<li><p><code>sb_coe()</code>: coerce and transform a whole object, or a
-recursive subset of an object.</p></li>
-<li><p><code>sb_before()</code>, <code>sb_after()</code>: methods to
+<li><p><code>sb_rm()</code>: S3 method to un-select (“remove”)
+subsets.</p></li>
+<li><p><code>sb_set()</code>: S3 method to modify (transform or replace
+values) subsets of an object by <strong>reference</strong>. Since it’s
+by reference, it does not allow coercion.</p></li>
+<li><p><code>sb_mod()</code>: S3 method to return a
+<strong>copy</strong> of an object with modified (transformed or
+replaced values) subsets. Has auto-coercion to a certain
+extent.</p></li>
+<li><p><code>sb_coe()</code>: S3 method to coerce and transform a whole
+object, or a recursive subset of an object.</p></li>
+<li><p><code>sb_before()</code>, <code>sb_after()</code>: S3 methods to
 insert new values before or after an index along a dimension of an
 object.</p></li>
-<li><p><code>sb_rec()</code>: not actually a method, but a function that
-can be combined with the above methods, for recursive sub-setting
-operations.</p></li>
+<li><p><code>sb_rec()</code>: a function that can be combined with the
+above methods, for recursive sub-setting operations.</p></li>
 </ul>
 <p>Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:</p>
 <ul>
-<li><p><code>aes_pro()</code>: programmatically friendly and stable
-version of the <code>aes()</code> function.</p></li>
+<li><p><code>aes_pro()</code> and <code>with_pro()</code>:
+programmatically friendly and stable version of the <code>with()</code>
+and <code>ggplot2::aes()</code> functions.</p></li>
 <li><p><code>sb_str()</code>: extract or replace a subset of characters
 of a single string (each single character is treated as a single
 element).</p></li>
@@ -756,6 +759,9 @@ object.</p></li>
 <p>And finally, a couple of helper functions for creating ranges,
 sequences and indices (often needed in sub-setting) are provided:</p>
 <ul>
+<li><p><code>n()</code>: Nested version of <code>c()</code>, and
+short-hand for <code>list()</code>.</p></li>
+<li><p><code>idx_by()</code>: Compute grouped indices.</p></li>
 <li><p><code>seq_rec()</code>: Recursive sequence generator (for example
 to generate a Fibonacci sequence)</p></li>
 <li><p><code>seq_names()</code>: create a range of indices from a
@@ -764,12 +770,6 @@ specified starting and ending name.</p></li>
 subscripts (array indices) to coordinates, coordinates to flat indices,
 and vice-versa.</p></li>
 </ul>
-<p> </p>
-<h2 id="help-pages">Help pages</h2>
-<p>For an explanation of the classes, and how each class is treated by
-‘subsets’, see <code>subsets_classes</code>.</p>
-<p>For an explanation of the common indexing arguments in the generic
-methods, see <code>subsets_indx_args</code>.</p>
 <p> </p>
 <h2 id="installing--loading">Installing &amp; Loading</h2>
 <p>One can install ‘subsets’ from GitHub like so:</p>
@@ -785,98 +785,24 @@ within a specific environment, like only within a specific function, one
 can use the following:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tinycodet<span class="sc">::</span><span class="fu">import_LL</span>(<span class="st">&quot;subsets&quot;</span>, <span class="at">selection =</span> ... )</span></code></pre></div>
 <p> </p>
-<h2 id="benchmarks">Benchmarks</h2>
-<p>Due to the many checks and conversions performed by the
-<code>subsets::</code> functions, to make sub-setting more
-programmatically and beginner friendly, the functions are almost
-necessarily slower than base R’s <code>[</code>-like operators.</p>
-<p>However, a considerable effort was made to keep the speed loss to a
-minimum. Generally, the speed loss is indeed neglible, and in some cases
-there is even speed improvement (thanks to the heavy lifting performed
-by the ‘collapse’ pakackage).</p>
-<p>Below are some benchmarks to give one an idea of the speed loss.
-These are just examples; speed is determined by a great number of
-factors.</p>
-<p> </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(bench)</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<h3 id="matrix">Matrix</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>x.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq_len</span>(<span class="dv">1000</span><span class="sc">*</span><span class="dv">1000</span>), <span class="at">ncol =</span> <span class="dv">1000</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">colnames</span>(x.mat) <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(letters, <span class="cn">NA</span>), <span class="dv">1000</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>sel.rows <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>sel.cols <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>]), <span class="dv">10</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>bm.matrix <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span> <span class="fu">sb_x.matrix</span>(x.mat, sel.rows, sel.cols),</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="st">&quot;base R&quot;</span> <span class="ot">=</span> x.mat[sel.rows, <span class="fu">lapply</span>(sel.cols, \(i) <span class="fu">which</span>(<span class="fu">colnames</span>(x.mat) <span class="sc">==</span> i)) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(), <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="at">min_iterations =</span> <span class="fl">1e4</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>)</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="fu">summary</span>(bm.matrix, <span class="at">relative =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 2 × 6
-#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`
-#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 subsets     1      1         1.41      1.09     1.18
-#&gt; 2 base R      1.42   1.44      1         1        1</code></pre>
-<p> </p>
-<h3 id="array-3d">Array (3D)</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>x.dims <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">900</span>, <span class="dv">4</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>x<span class="fl">.3</span>d <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">prod</span>(x.dims), x.dims)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>sel.rows <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">900</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>sel.lyrs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>bm<span class="fl">.3</span>d <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span>  <span class="fu">sb_x.array</span>(x<span class="fl">.3</span>d, <span class="at">rcl =</span> <span class="fu">n</span>(sel.rows, <span class="cn">NULL</span>, sel.lyrs)),</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="st">&quot;base R + abind&quot;</span> <span class="ot">=</span> abind<span class="sc">::</span><span class="fu">asub</span>(x<span class="fl">.3</span>d, <span class="at">idx =</span> <span class="fu">list</span>(sel.rows, sel.lyrs), <span class="at">dims =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)),</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="at">min_iterations =</span> <span class="fl">1e4</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>)</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="fu">summary</span>(bm<span class="fl">.3</span>d, <span class="at">relative =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 2 × 6
-#&gt;   expression       min median `itr/sec` mem_alloc `gc/sec`
-#&gt;   &lt;bch:expr&gt;     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 subsets         1      1         1.01      1.00     1.03
-#&gt; 2 base R + abind  1.00   1.02      1         1        1</code></pre>
-<p> </p>
-<h3 id="dataframe">Data.frame</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e5</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>chrmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">sample</span>(letters, n<span class="sc">*</span><span class="dv">400</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>), <span class="at">ncol =</span> <span class="dv">400</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>)</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>intmat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">seq.int</span>(n<span class="sc">*</span><span class="dv">400</span>), <span class="at">ncol =</span> <span class="dv">400</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>)</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(chrmat, intmat) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>()</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">&quot;chrmat&quot;</span>, <span class="st">&quot;intmat&quot;</span>))</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">colnames</span>(x) <span class="ot">&lt;-</span> <span class="fu">make.names</span>(<span class="fu">colnames</span>(x), <span class="at">unique =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>sel.cols <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">sample</span>(<span class="fu">names</span>(x), <span class="dv">10</span>), <span class="dv">4</span>)</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>sel.rows <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>bm.df <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>  <span class="st">&quot;subsets&quot;</span> <span class="ot">=</span> <span class="fu">sb_x.data.frame</span>(x, sel.rows, sel.cols),</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>  <span class="st">&quot;base R&quot;</span> <span class="ot">=</span> x[sel.rows, <span class="fu">match</span>(sel.cols, <span class="fu">names</span>(x)), <span class="at">drop =</span> <span class="cn">FALSE</span>],</span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>  <span class="at">min_iterations =</span> <span class="fl">1e4</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>)</span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="fu">summary</span>(bm.df, <span class="at">relative =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>#&gt; # A tibble: 2 × 6
-#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`
-#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1 subsets     1      1         2.03      1        1.52
-#&gt; 2 base R      2.78   1.96      1         1.10     1</code></pre>
-<p> </p>
 <h2 id="see-also">See Also</h2>
 <p>‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’
 R-packages to ensure an acceptable performance of its functions despite
 the many checks that these functions perform. I also recommend using
 these packages for other sub-setting and data wrangling functionalities.
 ‘subsets’ uses a modified version of the <code>abind::abind()</code>
-function from the ‘abind’ R-package. This R-package is recommended for
-binding and sub-filling arrays of arbitrary dimensions.</p>
+function from the ‘abind’ R-package; the ‘abind’ package is recommended
+for binding and sub-filling arrays of arbitrary dimensions.</p>
 <p>Besides these package, the following R packages work very nicely
 together with ‘subsets’:</p>
 <ul>
-<li><p>‘stringi’: THE R package for fast and concise string manipulation
-- an essential part of any programming language.</p></li>
+<li><p>‘stringi’: The primary R package for fast and concise string
+manipulation - an essential part of any programming language.</p></li>
 <li><p>‘tinycodet’: Helps the user with their coding etiquette. Focuses
-on 4 aspects: (1) safe functionalities, (2) an import system that
-combines benefits of using without attaching and attaching a package,
-(3) extending the capabilities of the aforementioned ‘stringi’ package,
-(4) functions to reduce repetitive code.</p></li>
+on 4 aspects: (1) safe functionalities; (2) an import system that
+combines benefits of using a package without attaching, and attaching a
+package; (3) extending the capabilities of the ‘stringi’ package; (4)
+functions to reduce repetitive code.</p></li>
 </ul>
 <p> </p>
 <h2 id="changelog-experimental-versions">Changelog (EXPERIMENTAL
@@ -918,6 +844,17 @@ the documentation of all the generic methods of ‘subsets’. Added the
 also functions as the nested version of <code>c()</code>. Added an
 additional help page explaining Non-Standard Evaluation (NSE); ‘subsets’
 avoids the usage of NSE whenever possible.</li>
+<li>1 December 2023: In the <code>sb_mod()</code> method, auto-coercion
+in data.frame-like objects is now allowed, provided rows are not
+specified (i.e. whole columns only). Expanded the help page of the
+<code>sb_mod()</code> function considerably. Fixed a bug in
+<code>aes_pro()</code>. Added the <code>safer_partialmatch()</code>
+function. Added the <code>idx_by()</code> function to compute grouped
+indices. Added the <code>dt_*</code> functions for functional forms of
+some data.table operations. Cleaned up some internal code. Added yet
+more tests (now over 42,000 tests). Benchmark removed from the Read-Me:
+planning to move them to the website, which will be build once this
+package is a bit more stable.</li>
 </ul>
 <p> </p>
 

@@ -29,8 +29,8 @@ subsets: an Easy Grammar of Subsets
     inconsistencies, and sub-setting related inconsistencies make up a
     good portion of these documents.
 
-    To my surprise, there is no comprehensive R-package (as far as I
-    could see at least) that actually attempts to "fix" the
+    To my surprise, there is no comprehensive R-package
+    (as far as I could see at least) that actually attempts to "fix" the
     subset-related issues laid out in these and other such documents.
 
     Famous subset-related R packages such as 'dplyr' and 'data.table'
@@ -148,30 +148,32 @@ following properties:
 
 The main focus is on the following generic S3 methods:
 
-- `sb_x()`: method to extract, exchange, or duplicate indices.
+- `sb_x()`: S3 method to extract, exchange, or duplicate subsets.
 
-- `sb_rm()`: method to remove indices.
+- `sb_rm()`: S3 method to un-select (“remove”) subsets.
 
-- `sb_set()`: method to modify (transform or replace values) subsets of
-  an object by **reference**.
+- `sb_set()`: S3 method to modify (transform or replace values) subsets
+  of an object by **reference**. Since it’s by reference, it does not
+  allow coercion.
 
-- `sb_mod()`: method to return a **copy** of an object with modified
-  (transformed or replaced values) subsets.
+- `sb_mod()`: S3 method to return a **copy** of an object with modified
+  (transformed or replaced values) subsets. Has auto-coercion to a
+  certain extent.
 
-- `sb_coe()`: coerce and transform a whole object, or a recursive subset
-  of an object.
+- `sb_coe()`: S3 method to coerce and transform a whole object, or a
+  recursive subset of an object.
 
-- `sb_before()`, `sb_after()`: methods to insert new values before or
+- `sb_before()`, `sb_after()`: S3 methods to insert new values before or
   after an index along a dimension of an object.
 
-- `sb_rec()`: not actually a method, but a function that can be combined
-  with the above methods, for recursive sub-setting operations.
+- `sb_rec()`: a function that can be combined with the above methods,
+  for recursive sub-setting operations.
 
 Beside these generic S3 methods, additional specialized sub-setting
 functions are provided:
 
-- `aes_pro()`: programmatically friendly and stable version of the
-  `aes()` function.
+- `aes_pro()` and `with_pro()`: programmatically friendly and stable
+  version of the `with()` and `ggplot2::aes()` functions.
 
 - `sb_str()`: extract or replace a subset of characters of a single
   string (each single character is treated as a single element).
@@ -181,6 +183,10 @@ functions are provided:
 And finally, a couple of helper functions for creating ranges, sequences
 and indices (often needed in sub-setting) are provided:
 
+- `n()`: Nested version of `c()`, and short-hand for `list()`.
+
+- `idx_by()`: Compute grouped indices.
+
 - `seq_rec()`: Recursive sequence generator (for example to generate a
   Fibonacci sequence)
 
@@ -189,16 +195,6 @@ and indices (often needed in sub-setting) are provided:
 
 - `sub2coord()`, `coord2ind()`: Convert subscripts (array indices) to
   coordinates, coordinates to flat indices, and vice-versa.
-
- 
-
-## Help pages
-
-For an explanation of the classes, and how each class is treated by
-‘subsets’, see `subsets_classes`.
-
-For an explanation of the common indexing arguments in the generic
-methods, see `subsets_indx_args`.
 
  
 
@@ -230,105 +226,6 @@ tinycodet::import_LL("subsets", selection = ... )
 
  
 
-## Benchmarks
-
-Due to the many checks and conversions performed by the `subsets::`
-functions, to make sub-setting more programmatically and beginner
-friendly, the functions are almost necessarily slower than base R’s
-`[`-like operators.
-
-However, a considerable effort was made to keep the speed loss to a
-minimum. Generally, the speed loss is indeed neglible, and in some cases
-there is even speed improvement (thanks to the heavy lifting performed
-by the ‘collapse’ pakackage).
-
-Below are some benchmarks to give one an idea of the speed loss. These
-are just examples; speed is determined by a great number of factors.
-
- 
-
-``` r
-library(bench)
-library(ggplot2)
-```
-
-### Matrix
-
-``` r
-x.mat <- matrix(seq_len(1000*1000), ncol = 1000)
-colnames(x.mat) <- sample(c(letters, NA), 1000, TRUE)
-sel.rows <- 1:100
-sel.cols <- rep(sample(letters[1:13]), 10)
-bm.matrix <- bench::mark(
-  "subsets" = sb_x.matrix(x.mat, sel.rows, sel.cols),
-  "base R" = x.mat[sel.rows, lapply(sel.cols, \(i) which(colnames(x.mat) == i)) |> unlist(), drop = FALSE],
-  min_iterations = 1e4
-)
-summary(bm.matrix, relative = TRUE)
-```
-
-    #> # A tibble: 2 × 6
-    #>   expression   min median `itr/sec` mem_alloc `gc/sec`
-    #>   <bch:expr> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
-    #> 1 subsets     1      1         1.41      1.09     1.18
-    #> 2 base R      1.42   1.44      1         1        1
-
- 
-
-### Array (3D)
-
-``` r
-x.dims <- c(1000, 900, 4)
-x.3d <- array(1:prod(x.dims), x.dims)
-sel.rows <- 1:900
-sel.lyrs <- c(TRUE, FALSE, TRUE, FALSE)
-bm.3d <- bench::mark(
-  "subsets" =  sb_x.array(x.3d, rcl = n(sel.rows, NULL, sel.lyrs)),
-  "base R + abind" = abind::asub(x.3d, idx = list(sel.rows, sel.lyrs), dims = c(1,3)),
-  min_iterations = 1e4
-)
-summary(bm.3d, relative = TRUE)
-```
-
-    #> # A tibble: 2 × 6
-    #>   expression       min median `itr/sec` mem_alloc `gc/sec`
-    #>   <bch:expr>     <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
-    #> 1 subsets         1      1         1.01      1.00     1.03
-    #> 2 base R + abind  1.00   1.02      1         1        1
-
- 
-
-### Data.frame
-
-``` r
-n <- 1e5
-chrmat <- matrix(
-  sample(letters, n*400, replace = TRUE), ncol = 400
-)
-intmat <- matrix(
-  seq.int(n*400), ncol = 400
-)
-x <- cbind(chrmat, intmat) |> as.data.frame()
-rm(list = c("chrmat", "intmat"))
-colnames(x) <- make.names(colnames(x), unique = TRUE)
-sel.cols <- rep(sample(names(x), 10), 4)
-sel.rows <- 1:1000
-bm.df <- bench::mark(
-  "subsets" = sb_x.data.frame(x, sel.rows, sel.cols),
-  "base R" = x[sel.rows, match(sel.cols, names(x)), drop = FALSE],
-  min_iterations = 1e4
-)
-summary(bm.df, relative = TRUE)
-```
-
-    #> # A tibble: 2 × 6
-    #>   expression   min median `itr/sec` mem_alloc `gc/sec`
-    #>   <bch:expr> <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
-    #> 1 subsets     1      1         2.03      1        1.52
-    #> 2 base R      2.78   1.96      1         1.10     1
-
- 
-
 ## See Also
 
 ‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’ R-packages
@@ -336,20 +233,20 @@ to ensure an acceptable performance of its functions despite the many
 checks that these functions perform. I also recommend using these
 packages for other sub-setting and data wrangling functionalities.
 ‘subsets’ uses a modified version of the `abind::abind()` function from
-the ‘abind’ R-package. This R-package is recommended for binding and
-sub-filling arrays of arbitrary dimensions.
+the ‘abind’ R-package; the ‘abind’ package is recommended for binding
+and sub-filling arrays of arbitrary dimensions.
 
 Besides these package, the following R packages work very nicely
 together with ‘subsets’:
 
-- ‘stringi’: THE R package for fast and concise string manipulation - an
-  essential part of any programming language.
+- ‘stringi’: The primary R package for fast and concise string
+  manipulation - an essential part of any programming language.
 
 - ‘tinycodet’: Helps the user with their coding etiquette. Focuses on 4
-  aspects: (1) safe functionalities, (2) an import system that combines
-  benefits of using without attaching and attaching a package, (3)
-  extending the capabilities of the aforementioned ‘stringi’
-  package, (4) functions to reduce repetitive code.
+  aspects: (1) safe functionalities; (2) an import system that combines
+  benefits of using a package without attaching, and attaching a
+  package; (3) extending the capabilities of the ‘stringi’ package; (4)
+  functions to reduce repetitive code.
 
  
 
@@ -387,5 +284,15 @@ together with ‘subsets’:
   version of `c()`. Added an additional help page explaining
   Non-Standard Evaluation (NSE); ‘subsets’ avoids the usage of NSE
   whenever possible.
+- 1 December 2023: In the `sb_mod()` method, auto-coercion in
+  data.frame-like objects is now allowed, provided rows are not
+  specified (i.e. whole columns only). Expanded the help page of the
+  `sb_mod()` function considerably. Fixed a bug in `aes_pro()`. Added
+  the `safer_partialmatch()` function. Added the `idx_by()` function to
+  compute grouped indices. Added the `dt_*` functions for functional
+  forms of some data.table operations. Cleaned up some internal code.
+  Added yet more tests (now over 42,000 tests). Benchmark removed from
+  the Read-Me: planning to move them to the website, which will be build
+  once this package is a bit more stable.
 
  

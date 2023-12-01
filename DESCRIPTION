@@ -30,11 +30,11 @@ Suggests:
     rmarkdown,
     tinytest,
     abind,
-    tinycodet,
     tidytable,
     tibble,
-    dplyr,
-    ggplot2
+    ggplot2,
+    sf,
+    tinycodet
 Depends: 
     R (>= 4.1.0)
 Imports:
