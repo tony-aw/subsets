@@ -120,8 +120,8 @@ This coercion function is, of course, applied before replacement (\code{rp}) or 
 \ifelse{html}{\figure{auto-coercion-depends-lightblue.svg}{options: alt='[auto-coercion: depends]'}}{\link[=subsets_classes]{auto-coercion: depends}} \cr
 Lists themselves allow complete change of their elements,
 since lists are merely pointers. \cr
-However, recursive subsets of lists which are themselves not lists,
-follow the rules of whatever object the recursive subsets are. \cr
+However, a recursive subset of a list which itself is not a list,
+follows the coercion rules of whatever class the recursive subset is. \cr
 \cr \cr
 }
 

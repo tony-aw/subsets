@@ -331,10 +331,10 @@ sb_after.data.frame <- function(x, new, margin, pos = collapse::fdim(x)[margin],
   if(!is.numeric(pos) || length(pos) != 1) {
     stop(error.txt2)
   }
-  if(any(pos < 1)) {
+  if(pos < 1) { # removed any(), as pos is scalar
     stop(error.txt2)
   }
-  if(any(pos > n)) {
+  if(pos > n) { # removed any(), as pos is scalar
     stop(simpleError("subscript out of bounds", call = abortcall))
   }
   

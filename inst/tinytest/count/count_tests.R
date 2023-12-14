@@ -1,5 +1,6 @@
 # count number of tests
-
+library(subsets)
+library(tinytest)
 
 # set working directory to source file location ====
 SourceFileLocation <- function() {

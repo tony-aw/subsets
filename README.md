@@ -198,6 +198,11 @@ and indices (often needed in sub-setting) are provided:
 
  
 
+Most of the heavy lifting in the internal code of this package is done
+by the ‘collapse’ package.
+
+ 
+
 ## Installing & Loading
 
 One can install ‘subsets’ from GitHub like so:
@@ -223,30 +228,6 @@ can use the following:
 ``` r
 tinycodet::import_LL("subsets", selection = ... )
 ```
-
- 
-
-## See Also
-
-‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’ R-packages
-to ensure an acceptable performance of its functions despite the many
-checks that these functions perform. I also recommend using these
-packages for other sub-setting and data wrangling functionalities.
-‘subsets’ uses a modified version of the `abind::abind()` function from
-the ‘abind’ R-package; the ‘abind’ package is recommended for binding
-and sub-filling arrays of arbitrary dimensions.
-
-Besides these package, the following R packages work very nicely
-together with ‘subsets’:
-
-- ‘stringi’: The primary R package for fast and concise string
-  manipulation - an essential part of any programming language.
-
-- ‘tinycodet’: Helps the user with their coding etiquette. Focuses on 4
-  aspects: (1) safe functionalities; (2) an import system that combines
-  benefits of using a package without attaching, and attaching a
-  package; (3) extending the capabilities of the ‘stringi’ package; (4)
-  functions to reduce repetitive code.
 
  
 
@@ -294,5 +275,6 @@ together with ‘subsets’:
   Added yet more tests (now over 42,000 tests). Benchmark removed from
   the Read-Me: planning to move them to the website, which will be build
   once this package is a bit more stable.
+- 14 December 2023: Experimental website published.
 
  

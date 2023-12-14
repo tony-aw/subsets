@@ -2,7 +2,6 @@
 #'
 #' @description
 #' This is an S3 Method to replace or transform a subset of an object BY REFERENCE. \cr
-#' WARNING: this method is currently experimental!
 #' 
 #'
 #' @param x see \link{subsets_classes}.

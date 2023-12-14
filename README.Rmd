@@ -225,6 +225,10 @@ sequences and indices (often needed in sub-setting) are provided:
 
 &nbsp;
 
+Most of the heavy lifting in the internal code of this package is done by the 'collapse' package.
+
+&nbsp;
+
 
 ## Installing & Loading
 
@@ -251,32 +255,6 @@ tinycodet::import_LL("subsets", selection = ... )
 &nbsp;
 
 
-## See Also
-
-
-'subsets' relies on the 'Rcpp', 'collapse' and 'data.table' R-packages
-to ensure an acceptable performance of its functions despite the many checks that these functions perform.
-I also recommend using these packages for other sub-setting and data wrangling functionalities.
-'subsets' uses a modified version of the `abind::abind()` function from the 'abind' R-package; the 'abind' package is recommended for binding and sub-filling arrays of arbitrary dimensions. 
-
-
-Besides these package,
-the following R packages work very nicely together with 'subsets':
-
-  * 'stringi':
-    The primary R package for fast and concise string manipulation - an
-    essential part of any programming language.
-
-  * 'tinycodet':
-    Helps the user with their coding etiquette. Focuses on 4
-    aspects: (1) safe functionalities; (2) an import system that
-    combines benefits of using a package without attaching, and attaching a
-    package; (3) extending the capabilities of the
-    'stringi' package; (4) functions to reduce repetitive code.
-    
-&nbsp;
-
-
 ## Changelog (EXPERIMENTAL VERSIONS)
 
  - 31 October 2023: Very first GitHub upload. Also: Halloween!
@@ -285,6 +263,7 @@ the following R packages work very nicely together with 'subsets':
  - 22 November 2023: Made the arguments in the `sub2ind` - functions more consistent, and also expanded their documentation a bit. Added an expanded explanation of the classes for argument `x` in a separate help file for a better overview (and less typing for me). Added more badges. Improved the tests a bit. Added an `.onAttach()` message function. The `aes_pro()` function now uses formula input rather than character input.
  - 27 November 2023: Added the `rcl` argument to the `sb_*.array()` methods, specifically for 3-dimensional arrays. Produced more tests, and re-organised the tests. Added the `with_pro()` function, which - like `aes_pro()` - is the programmatically friendly version of `with()`, and works with a formula instead of expression. Added reference to 'abind' in bibliography of the `sb_before()` and `sb_after()` methods. Normalized the order of the classes in the documentation of all the generic methods of 'subsets'. Added the `n()` function, as short-hand for `list()`, and also functions as the nested version of `c()`. Added an additional help page explaining Non-Standard Evaluation (NSE); 'subsets' avoids the usage of NSE whenever possible.
  - 1 December 2023: In the `sb_mod()` method, auto-coercion in data.frame-like objects is now allowed, provided rows are not specified (i.e. whole columns only). Expanded the help page of the `sb_mod()` function considerably. Fixed a bug in `aes_pro()`. Added the `safer_partialmatch()` function. Added the `idx_by()` function to compute grouped indices. Added the `dt_*` functions for functional forms of some data.table operations. Cleaned up some internal code. Added yet more tests (now over 42,000 tests). Benchmark removed from the Read-Me: planning to move them to the website, which will be build once this package is a bit more stable.
+ - 14 December 2023: Experimental website published.
  
 
 &nbsp;

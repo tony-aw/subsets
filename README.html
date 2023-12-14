@@ -771,6 +771,9 @@ subscripts (array indices) to coordinates, coordinates to flat indices,
 and vice-versa.</p></li>
 </ul>
 <p> </p>
+<p>Most of the heavy lifting in the internal code of this package is
+done by the ‘collapse’ package.</p>
+<p> </p>
 <h2 id="installing--loading">Installing &amp; Loading</h2>
 <p>One can install ‘subsets’ from GitHub like so:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;https://github.com/tony-aw/subsets&quot;</span>)</span></code></pre></div>
@@ -784,26 +787,6 @@ functions to the namespace - using:</p>
 within a specific environment, like only within a specific function, one
 can use the following:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tinycodet<span class="sc">::</span><span class="fu">import_LL</span>(<span class="st">&quot;subsets&quot;</span>, <span class="at">selection =</span> ... )</span></code></pre></div>
-<p> </p>
-<h2 id="see-also">See Also</h2>
-<p>‘subsets’ relies on the ‘Rcpp’, ‘collapse’ and ‘data.table’
-R-packages to ensure an acceptable performance of its functions despite
-the many checks that these functions perform. I also recommend using
-these packages for other sub-setting and data wrangling functionalities.
-‘subsets’ uses a modified version of the <code>abind::abind()</code>
-function from the ‘abind’ R-package; the ‘abind’ package is recommended
-for binding and sub-filling arrays of arbitrary dimensions.</p>
-<p>Besides these package, the following R packages work very nicely
-together with ‘subsets’:</p>
-<ul>
-<li><p>‘stringi’: The primary R package for fast and concise string
-manipulation - an essential part of any programming language.</p></li>
-<li><p>‘tinycodet’: Helps the user with their coding etiquette. Focuses
-on 4 aspects: (1) safe functionalities; (2) an import system that
-combines benefits of using a package without attaching, and attaching a
-package; (3) extending the capabilities of the ‘stringi’ package; (4)
-functions to reduce repetitive code.</p></li>
-</ul>
 <p> </p>
 <h2 id="changelog-experimental-versions">Changelog (EXPERIMENTAL
 VERSIONS)</h2>
@@ -855,6 +838,7 @@ some data.table operations. Cleaned up some internal code. Added yet
 more tests (now over 42,000 tests). Benchmark removed from the Read-Me:
 planning to move them to the website, which will be build once this
 package is a bit more stable.</li>
+<li>14 December 2023: Experimental website published.</li>
 </ul>
 <p> </p>
 
