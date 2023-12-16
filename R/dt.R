@@ -29,15 +29,24 @@
 #' @examplesIf requireNamespace("sf") && requireNamespace("ggplot2")
 #' requireNamespace("sf") && requireNamespace("ggplot2")
 #' 
+#' 
+#' # dt_aggregate on sf-data.table ====
+#' 
 #' x <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
 #' x <- data.table::as.data.table(x)
 #' 
 #' x$region <- ifelse(x$CNTY_ID <= 2000, 'high', 'low')
-#' plotdat <- dt_aggregate(x, SDcols = "geometry", f= sf::st_union, by = "region")
+#' plotdat <- dt_aggregate(
+#'   x, SDcols = "geometry", f= sf::st_union, by = "region"
+#' )
 #' 
 #' ggplot2::ggplot(plotdat, aes_pro(geometry = ~ geometry, fill = ~ region)) + 
 #'   ggplot2::geom_sf()
 #' 
+#' #############################################################################
+#' 
+#' 
+#' # dt_setcoe ====
 #' 
 #' obj <- data.table::data.table(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
 #' str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
@@ -47,7 +56,7 @@
 #' )
 #' str(obj)
 #' obj <- data.table::data.table(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
-#' obj <- dt_setcoe(obj, vars = is.numeric, f = as.numeric)
+#' dt_setcoe(obj, vars = is.numeric, f = as.numeric) # integers are now numeric
 #' str(obj)
 #' sb_set(obj,
 #'   filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
@@ -85,8 +94,10 @@ dt_setcoe <- function(
     x, col = NULL, vars = NULL, f
 ) {
   
-  if(!data.table::is.data.table(x)) stop("`x` must be a data.table")
-  .check_args_df <- function(x, row = NULL, col = col, filter = NULL, vars = vars, abortcall = sys.call())
+  if(!is.function(f)) stop("`f` must be a function")
+  if(!data.table::is.data.table(x)) { stop("`x` must be a data.table") }
+  
+  .check_args_df(x, row = NULL, col = col, filter = NULL, vars = vars, abortcall = sys.call())
   
   if(!is.null(col)) { col <- .indx_make_tableind(
     col, x,  2, allow_dupl = FALSE, inv = FALSE, abortcall = sys.call()
@@ -98,7 +109,8 @@ dt_setcoe <- function(
   
   if(is.null(col)) col <- names(x)
   
-  rp <- lapply(collapse::ss(x, j = col, check = FALSE), f)
-  data.table::set(x, j = as.integer(col), value = rp)
+  for(j in as.integer(col)) { # using loop instead of lapply to reduce memory to only one column at a time
+    data.table::set(x, j = j, value = f(x[[j]]))
+  }
 }
 

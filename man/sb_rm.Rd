@@ -68,7 +68,8 @@ as the attributes necessarily have to be dropped:
 }
 \examples{
 
-# vector-like objects ====
+# atomic objects ====
+
 obj <- matrix(1:16, ncol = 4)
 colnames(obj) <- c("a", "b", "c", "a")
 print(obj)
@@ -87,8 +88,11 @@ sb_rm(obj, rcl = n(1, NULL, c(1, 3)))
 sb_rm(obj, i = \(x)x>5)
 # above is equivalent to obj[!obj > 5]
 
+#############################################################################
+
 
 # lists ====
+
 obj <- list(a = 1:10, b = letters[1:11], c = 11:20)
 print(obj)
 sb_rm(obj, "a")
@@ -103,14 +107,20 @@ sb_rm(obj, is.numeric)
 # above is equivalent to obj[!sapply(obj, is.numeric)] # this time singular brackets?
 # for recusive indexing, see sb_rec()
 
+#############################################################################
+
 
 # factors ====
+
 obj <- factor(rep(letters[1:5], 2))
 sb_rm(obj, lvl = "a")
 # above is equivalent to obj[which(!obj \%in\% "a")]
 
+#############################################################################
+
 
 # data.frame-like objects ====
+
 obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
 print(obj)
 sb_rm(obj, 1:3, 1:3)

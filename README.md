@@ -12,7 +12,7 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 [![](https://img.shields.io/badge/ORCID-0000--0001--9498--8379-green.svg)](https://orcid.org/0000-0001-9498-8379)
 <!-- badges: end -->
 
-subsets: an Easy Grammar of Subsets
+subsets: A Holistic Grammar of Subsets
 
  
 
@@ -124,8 +124,9 @@ following properties:
   - Support lists.
 
   - Support the following data.frame-like objects: data.frame,
-    data.table, tibble, and tidytable class, and objects derived from
-    these classes.
+    data.table, tibble, and tidytable class, and classes that are
+    straight-forward inheritors from these classes (such as
+    sf-data.frames or sf-data.tables).
 
   - Support for the column selection sub-setting used in ggplot2’s
     `aes()` function.
@@ -276,5 +277,6 @@ tinycodet::import_LL("subsets", selection = ... )
   the Read-Me: planning to move them to the website, which will be build
   once this package is a bit more stable.
 - 14 December 2023: Experimental website published.
+- 16 December 2023: Small documentation improvements.
 
  

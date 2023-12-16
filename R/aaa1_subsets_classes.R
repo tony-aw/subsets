@@ -1,12 +1,14 @@
 #' Supported S3 classes, With Important Comments
 #'
 #' @description
-#' The `sb_` methods support the following categories of S3 classes: \cr
+#' The `sb_` generic methods support the following categories of S3 classes: \cr
 #' 
 #'  * atomic vector classes (vectors, matrices, arrays);
 #'  * factors;
 #'  * lists;
-#'  * data.frame-like classes (data.frames, data.tables, tibbles, tidytables).
+#'  * the data.frame-like classes data.frames, data.tables, tibbles, tidytables, \cr
+#'  and classes that are straight-forward inheritors from these classes
+#'  (such as sf-data.frames or sf-data.tables).
 #' 
 #' These categories of classes are quite different from each other.
 #' It is vital to understand their differences,

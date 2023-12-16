@@ -88,7 +88,8 @@
 #'    * Support lists.
 #'    * Support the following data.frame-like objects:
 #'    data.frame, data.table, tibble, and tidytable class,
-#'    and objects derived from these classes.
+#'    and classes that are straight-forward inheritors from these classes
+#'    (such as sf-data.frames or sf-data.tables).
 #'    * Support for the column selection sub-setting used in ggplot2's \link[ggplot2]{aes} function.
 #'    * Support for sub-setting characters in a single string.
 #'    * Since the main functions are S3 methods,

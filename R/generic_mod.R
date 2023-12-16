@@ -90,7 +90,8 @@
 #'
 #' @examples
 #' 
-#' # vector-like objects ====
+#' # atomic objects ====
+#' 
 #' obj <- matrix(1:16, ncol = 4)
 #' colnames(obj) <- c("a", "b", "c", "a")
 #' print(obj)
@@ -123,14 +124,19 @@
 #' sb_mod(obj, i = \(x)x<=5, rp = -1:-5)
 #' # above is equivalent to obj[obj <= 5] <- -1:-5
 #' 
+#' #############################################################################
+#' 
 #' 
 #' # lists ====
+#' 
 #' obj <- list(a = 1:10, b = letters[1:11], c = 11:20)
 #' print(obj)
 #' sb_mod(obj, "a", rp = list(1L))
 #' # above is equivalent to  obj[["a"]] <- 1L; obj
 #' sb_mod(obj, is.numeric, rp = list(-1:-10, -11:-20))
 #' # above is equivalent to  obj[which(sapply(obj, is.numeric))] <- list(-1:-10, -11:-20); obj
+#' 
+#' #############################################################################
 #' 
 #' 
 #' # data.frame-like objects ====

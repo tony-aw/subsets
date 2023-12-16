@@ -41,15 +41,24 @@ Functional forms of special data.table operations - ALL programmatically friendl
 \dontshow{if (requireNamespace("sf") && requireNamespace("ggplot2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 requireNamespace("sf") && requireNamespace("ggplot2")
 
+
+# dt_aggregate on sf-data.table ====
+
 x <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
 x <- data.table::as.data.table(x)
 
 x$region <- ifelse(x$CNTY_ID <= 2000, 'high', 'low')
-plotdat <- dt_aggregate(x, SDcols = "geometry", f= sf::st_union, by = "region")
+plotdat <- dt_aggregate(
+  x, SDcols = "geometry", f= sf::st_union, by = "region"
+)
 
 ggplot2::ggplot(plotdat, aes_pro(geometry = ~ geometry, fill = ~ region)) + 
   ggplot2::geom_sf()
 
+#############################################################################
+
+
+# dt_setcoe ====
 
 obj <- data.table::data.table(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
 str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
@@ -59,7 +68,7 @@ sb_set(
 )
 str(obj)
 obj <- data.table::data.table(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
-obj <- dt_setcoe(obj, vars = is.numeric, f = as.numeric)
+dt_setcoe(obj, vars = is.numeric, f = as.numeric) # integers are now numeric
 str(obj)
 sb_set(obj,
   filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,

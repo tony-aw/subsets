@@ -1,7 +1,7 @@
 #' Index Arguments in the Generic Sub-setting Methods
 #'
 #' @description
-#' There are 5 types of arguments that can be used
+#' There are 6 types of arguments that can be used
 #' in the generic methods of 'subsets' to specify the indices to perform operations on:
 #' 
 #'  * `i`: to specify flat (i.e. dimensionless) indices.
@@ -11,6 +11,7 @@
 #'  columns (second dimension),
 #'  and layers (third dimension),
 #'  in arrays that have exactly 3 dimensions.
+#'  * `lvl`: specify levels, for factors only.
 #'  * `filter, vars`: to specify rows and/or columns specifically in data.frame-like objects. \cr \cr
 #' 
 #' 
@@ -56,7 +57,7 @@
 #' Any of the following can be specified for the arguments `row` / `col`:
 #' 
 #'  * `NULL` (default), corresponds to a missing argument,
-#'  which results in ALL of the indices in this dimension being selected for the operations.
+#'  which results in ALL of the indices in this dimension being selected for the operation.
 #'  * a vector of length 0,
 #'  in which case no indices are selected for the operation (i.e. empty selection).
 #'  * a \bold{strictly positive integer} vector with dimension indices to select for the operation.
@@ -113,8 +114,8 @@
 #' For each of the aforementioned 3 elements of the list `rcl`,
 #' any of the following can be specified:
 #' 
-#'  * `NULL` (default), corresponds to a missing argument,
-#'  which results in ALL of the indices in this dimension being selected for the operations.
+#'  * `NULL`, corresponds to a missing argument,
+#'  which results in ALL of the indices in this dimension being selected for the operation.
 #'  * a vector of length 0,
 #'  in which case no indices are selected for the operation (i.e. empty selection).
 #'  * a \bold{strictly positive integer} vector with dimension indices to select for the operation.

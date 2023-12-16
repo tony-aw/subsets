@@ -5,12 +5,14 @@
 \alias{subsets_classes}
 \title{Supported S3 classes, With Important Comments}
 \description{
-The \code{sb_} methods support the following categories of S3 classes: \cr
+The \code{sb_} generic methods support the following categories of S3 classes: \cr
 \itemize{
 \item atomic vector classes (vectors, matrices, arrays);
 \item factors;
 \item lists;
-\item data.frame-like classes (data.frames, data.tables, tibbles, tidytables).
+\item the data.frame-like classes data.frames, data.tables, tibbles, tidytables, \cr
+and classes that are straight-forward inheritors from these classes
+(such as sf-data.frames or sf-data.tables).
 }
 
 These categories of classes are quite different from each other.

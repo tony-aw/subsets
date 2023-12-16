@@ -27,7 +27,7 @@ set.seed(1)
 
 
 
-subsets: an Easy Grammar of Subsets
+subsets: A Holistic Grammar of Subsets
 
 
 &nbsp;
@@ -142,8 +142,9 @@ These are (hopefully) easier sub-setting methods and functions with the followin
       * Support lists.
 
       * Support the following data.frame-like objects:
-        data.frame, data.table, tibble, and tidytable class, and
-        objects derived from these classes.
+        data.frame, data.table, tibble, and tidytable class,
+        and classes that are straight-forward inheritors from these classes
+        (such as sf-data.frames or sf-data.tables).
 
       * Support for the column selection sub-setting used in
         ggplot2's `aes()` function.
@@ -264,6 +265,7 @@ tinycodet::import_LL("subsets", selection = ... )
  - 27 November 2023: Added the `rcl` argument to the `sb_*.array()` methods, specifically for 3-dimensional arrays. Produced more tests, and re-organised the tests. Added the `with_pro()` function, which - like `aes_pro()` - is the programmatically friendly version of `with()`, and works with a formula instead of expression. Added reference to 'abind' in bibliography of the `sb_before()` and `sb_after()` methods. Normalized the order of the classes in the documentation of all the generic methods of 'subsets'. Added the `n()` function, as short-hand for `list()`, and also functions as the nested version of `c()`. Added an additional help page explaining Non-Standard Evaluation (NSE); 'subsets' avoids the usage of NSE whenever possible.
  - 1 December 2023: In the `sb_mod()` method, auto-coercion in data.frame-like objects is now allowed, provided rows are not specified (i.e. whole columns only). Expanded the help page of the `sb_mod()` function considerably. Fixed a bug in `aes_pro()`. Added the `safer_partialmatch()` function. Added the `idx_by()` function to compute grouped indices. Added the `dt_*` functions for functional forms of some data.table operations. Cleaned up some internal code. Added yet more tests (now over 42,000 tests). Benchmark removed from the Read-Me: planning to move them to the website, which will be build once this package is a bit more stable.
  - 14 December 2023: Experimental website published.
+ - 16 December 2023: Small documentation improvements.
  
 
 &nbsp;

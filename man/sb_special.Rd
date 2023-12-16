@@ -50,6 +50,7 @@ attr(x, "test") <- "test"
 sb_a(x, "test")
 sb_a(x)
 
+
 x <- "hello"
 sb_str(x, 5:1) # this gives "olleh"
 sb_str(x, c(1:5, 5)) # this gives "helloo"

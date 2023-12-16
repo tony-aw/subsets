@@ -72,7 +72,9 @@ gen_mat <- function() {
   colnames(obj) <- c("a", "b", "c", "a")
   return(obj)
 }
-# vector-like objects ====
+
+# atomic objects ====
+
 obj <- obj2 <- gen_mat()
 obj
 sb_set(obj, 1:3, 1:3, rp = -1:-9)

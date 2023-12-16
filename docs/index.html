@@ -17,12 +17,12 @@
     8) Support lists.
     9) Support data.frame-like objects (data.frame, data.table, tibble, tidytable).
     10) Support ggplot2 aesthetics.">
-<title>Grammar of Subsets • subsets</title>
+<title>A Holistic Grammar of Subsets • subsets</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Grammar of Subsets">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="A Holistic Grammar of Subsets">
 <meta property="og:description" content="Subsetting methods for various data-types.
     These methods have the following properties.
     1) Programmatically friendly.
@@ -83,7 +83,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>subsets: an Easy Grammar of Subsets</p>
+<p>subsets: A Holistic Grammar of Subsets</p>
 <p> </p>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
@@ -168,7 +168,7 @@
 <li><p>Support atomic objects (vectors, matrices, arrays).</p></li>
 <li><p>Support factors.</p></li>
 <li><p>Support lists.</p></li>
-<li><p>Support the following data.frame-like objects: data.frame, data.table, tibble, and tidytable class, and objects derived from these classes.</p></li>
+<li><p>Support the following data.frame-like objects: data.frame, data.table, tibble, and tidytable class, and classes that are straight-forward inheritors from these classes (such as sf-data.frames or sf-data.tables).</p></li>
 <li><p>Support for the column selection sub-setting used in ggplot2’s <code>aes()</code> function.</p></li>
 <li><p>Support for sub-setting characters in a single string.</p></li>
 <li><p>Since the main functions are S3 functions, other packages may add functionality for additional classes.</p></li>
@@ -235,6 +235,7 @@
 <li>27 November 2023: Added the <code>rcl</code> argument to the <code>sb_*.array()</code> methods, specifically for 3-dimensional arrays. Produced more tests, and re-organised the tests. Added the <code><a href="reference/pro.html">with_pro()</a></code> function, which - like <code><a href="reference/pro.html">aes_pro()</a></code> - is the programmatically friendly version of <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>, and works with a formula instead of expression. Added reference to ‘abind’ in bibliography of the <code><a href="reference/sb_in.html">sb_before()</a></code> and <code><a href="reference/sb_in.html">sb_after()</a></code> methods. Normalized the order of the classes in the documentation of all the generic methods of ‘subsets’. Added the <code><a href="reference/nest.html">n()</a></code> function, as short-hand for <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>, and also functions as the nested version of <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. Added an additional help page explaining Non-Standard Evaluation (NSE); ‘subsets’ avoids the usage of NSE whenever possible.</li>
 <li>1 December 2023: In the <code><a href="reference/sb_mod.html">sb_mod()</a></code> method, auto-coercion in data.frame-like objects is now allowed, provided rows are not specified (i.e. whole columns only). Expanded the help page of the <code><a href="reference/sb_mod.html">sb_mod()</a></code> function considerably. Fixed a bug in <code><a href="reference/pro.html">aes_pro()</a></code>. Added the <code><a href="reference/safer_dollar.html">safer_partialmatch()</a></code> function. Added the <code><a href="reference/idx_by.html">idx_by()</a></code> function to compute grouped indices. Added the <code>dt_*</code> functions for functional forms of some data.table operations. Cleaned up some internal code. Added yet more tests (now over 42,000 tests). Benchmark removed from the Read-Me: planning to move them to the website, which will be build once this package is a bit more stable.</li>
 <li>14 December 2023: Experimental website published.</li>
+<li>16 December 2023: Small documentation improvements.</li>
 </ul>
 <p> </p>
 </div>
