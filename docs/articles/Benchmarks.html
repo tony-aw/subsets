@@ -173,12 +173,17 @@ factors.</p>
 <span>  min_iterations <span class="op">=</span> <span class="fl">1e4</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">bm.df</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
+<span><span class="co">#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;bch:expr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> subsets     1      1         2.03      1        1.52</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> base R      2.78   1.96      1         1.10     1</span></span></code></pre>
 <p> </p>
 </div>
 <div class="section level3">
 <h3 id="data-table">data.table<a class="anchor" aria-label="anchor" href="#data-table"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">as.data.table</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="va">tempfun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">i</span>, <span class="va">j</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">collapse</span><span class="fu">::</span><span class="fu"><a href="https://sebkrantz.github.io/collapse/reference/fsubset.html" class="external-link">ss</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">i</span>, <span class="va">j</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>

@@ -137,7 +137,7 @@ summary(bm.df, relative = TRUE)
 
 ```{r echo = FALSE, eval = TRUE}
 load("bm.df.RData")
-obj <- summary(bm.df, relative = TRUE)
+summary(bm.df, relative = TRUE)
 ```
 
 &nbsp;
