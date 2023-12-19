@@ -20,9 +20,119 @@ It is vital to understand their differences,
 in order to use the 'subsets' package properly. \cr
 Thus this help page will explain their important properties and important differences. \cr
 \cr
+\cr
 }
-\section{Atomic Vector Classes}{
+\section{Auto-Coercion Rules}{
 
+\bold{Coercion Semantics} \cr
+The \link{sb_mod} method
+modify subsets of an object through a \bold{deep copy}. \cr
+The \link{sb_set} method and \link{dt_setcoe} function
+modify subsets of an object \bold{by reference}. \cr
+These 2 copy semantics - "pass by reference" or "modify copy" -
+have slightly different auto-coercion rules. These are explained in this section. \cr
+Note that the \link{sb_before} and \link{sb_after} methods
+usually allow coercion for all classes.
+\cr
+\cr
+\bold{Atomic} \cr
+\ifelse{html}{\figure{coercion_through_copy-YES-darkgreen.svg}{options: alt='[coercion_through_copy: YES]'}}{\link[=subsets_classes]{coercion_through_copy: YES}} \cr
+\ifelse{html}{\figure{coercion_by_reference-NO-red.svg}{options: alt='[coercion_by_reference: NO]'}}{\link[=subsets_classes]{coercion_by_reference: NO}} \cr
+Atomic objects are automatically coerced to fit the modified subset values,
+when modifying through copy. \cr
+For example, replacing one or multiple values in an integer vector
+(type \code{int})
+with a decimal number
+(type \code{dbl})
+will coerce the entire vector to type \code{dbl}. \cr
+\cr
+Replacing or transforming subsets of atomic objects \bold{by reference}
+does NOT support coercion.
+Thus, for example, the following code,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- 1:16
+sb_set(x, i = 1:6, rp = 8.5)
+x
+}\if{html}{\out{</div>}}
+
+gives \verb{c(rep(8, 6) 7:16)} instead of \code{c(rep(8.5, 6), 7:16)},
+because \code{x} is of type \code{integer}, so \code{rp} is interpreted as type \code{integer} also. \cr
+\cr
+\cr
+\bold{Factor} \cr
+\ifelse{html}{\figure{coercion_through_copy-NO-red.svg}{options: alt='[coercion_through_copy: NO]'}}{\link[=subsets_classes]{coercion_through_copy: NO}} \cr
+Factors only accept values that are part of their levels,
+and thus do NOT support coercion on modification.
+There is no mechanism for changing factors by reference at all. \cr
+Replacing a value with a new value not part of its levels,
+will result in the replacement value being \code{NA}. \cr
+\cr
+\cr
+\bold{List} \cr
+\ifelse{html}{\figure{coercion_through_copy-depends-lightblue.svg}{options: alt='[coercion_through_copy: depends]'}}{\link[=subsets_classes]{coercion_through_copy: depends}} \cr
+\ifelse{html}{\figure{coercion_by_reference-depends-lightblue.svg}{options: alt='[coercion_by_reference: depends]'}}{\link[=subsets_classes]{coercion_by_reference: depends}} \cr
+Lists themselves allow complete change of their elements,
+since lists are merely pointers. \cr
+This is true regardless if replacement/transformation takes place by reference or through a copy. \cr
+For example, the following code performs full coercion:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- list(factor(letters), factor(letters))
+sb_mod(x, 1, rp = list(1))
+sb_set(x, 1, rp = list(1)); print(x)
+}\if{html}{\out{</div>}}
+
+However, a recursive subset of a list which itself is not a list,
+follows the coercion rules of whatever class the recursive subset is. \cr
+For example the following code:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- list(1:10, 1:10)
+sb_rec(x, 1) |> sb_mod(i = 1, rp = "a") # coerces to character
+sb_rec(x, 1) |> sb_set(i = 1, rp = "a"); print(x) # no coercion; "a" replaced with NA.
+}\if{html}{\out{</div>}}
+
+transforms recursive subsets according to the - in this case -
+atomic auto-coercion rules. \cr
+\cr
+\cr
+\bold{Data.frame-like, when replacing/transforming whole columns} \cr
+\ifelse{html}{\figure{coercion_through_copy-YES-darkgreen.svg}{options: alt='[coercion_through_copy: YES]'}}{\link[=subsets_classes]{coercion_through_copy: YES}} \cr
+\ifelse{html}{\figure{coercion_by_reference-YES-darkgreen.svg}{options: alt='[coercion_by_reference: YES]'}}{\link[=subsets_classes]{coercion_by_reference: YES}} \cr
+A data.frame-like objects
+(data.frames, data.tables, tibbles, tidytables, and their sf-equivalents)
+are actually lists, where each column is itself a list.
+As such, replacing/transforming whole columns,
+so \code{row = NULL} and \code{filter = NULL},
+allows completely changing the type of the column. \cr
+Note that coercion of columns needs arguments
+\code{row = NULL} and \code{filter = NULL}
+in the \link{sb_mod} and \link{sb_set} methods;
+NO auto-coercion will take place when specifying something like \code{row = 1:nrow(x)}
+(see next section). \cr
+\cr
+\cr
+\bold{Data.frame-like, when partially replacing/transforming columns} \cr
+\ifelse{html}{\figure{coercion_through_copy-NO-red.svg}{options: alt='[coercion_through_copy: NO]'}}{\link[=subsets_classes]{coercion_through_copy: NO}} \cr
+\ifelse{html}{\figure{coercion_by_reference-NO-red.svg}{options: alt='[coercion_by_reference: NO]'}}{\link[=subsets_classes]{coercion_by_reference: NO}} \cr
+If rows are specified in the \link{sb_mod} and \link{sb_set} methods,
+and thus not whole columns but parts of columns are replaced or transformed,
+NO auto-coercion takes place. \cr
+I.e.: replacing/transforming a value in an integer (\code{int}) column to become \code{1.5},
+will NOT coerce the column to the decimal type (\code{dbl});
+instead, the replacement value \code{1.5} is coerced to integer \code{1}. \cr
+The \code{coe} argument in the \link{sb_mod} method
+allows the user to enforce coercion,
+even if subsets of columns are replaced/transformed instead of whole columns. \cr
+Specifically, the \code{coe} arguments allows the user to specify a coercive function
+to be applied on the entirety of every column specified in \code{col} or \code{vars};
+columns outside this subset are not affected. \cr
+This coercion function is, of course,
+applied before replacement (\code{rp}) or transformation (\code{tf()}). \cr
+\cr \cr
+}
+
+\section{Technical Details}{
+
+\bold{Atomic} \cr
 \ifelse{html}{\figure{require_unique_names-NO-red.svg}{options: alt='[require unique names: NO]'}}{\link[=subsets_classes]{require unique names: NO}} \cr
 The atomic vector is the most basic class type. \cr
 Matrices and Arrays are just atomic vectors with dimension attributes. \cr
@@ -32,10 +142,7 @@ must have the same atomic type
 Therefore, the \link{sb_coe} method will coerce the entirety of an atomic vector,
 NOT just a subset of it. \cr
 \cr
-}
-
-\section{Factor Class}{
-
+\bold{Factor} \cr
 \ifelse{html}{\figure{require_unique_names-NO-red.svg}{options: alt='[require unique names: NO]'}}{\link[=subsets_classes]{require unique names: NO}} \cr
 Factors have the property that they can only store values that are defined in
 their "levels" attribute; other values are not allowed, and thus result in \code{NA}s. \cr
@@ -45,20 +152,14 @@ which can store an infinite variety of values
 (provided they are of the same atomic type). \cr
 Due to these properties, there is NO \code{sb_set()} method for factors. \cr
 \cr
-}
-
-\section{List Class}{
-
+\bold{List} \cr
 \ifelse{html}{\figure{require_unique_names-NO-red.svg}{options: alt='[require unique names: NO]'}}{\link[=subsets_classes]{require unique names: NO}} \cr
 Lists are recursive objects (i.e. they can be nested),
 and they do not actually store values but rather store reference to other objects. \cr
 Therefore \link{sb_rec} method can be used to access recursive subsets of a list,
 no matter how deep/low in hierarchy it is in the list. \cr
 \cr
-}
-
-\section{Data.frame-like classes}{
-
+\bold{Data.frame-like} \cr
 \ifelse{html}{\figure{require_unique_names-YES-darkgreen.svg}{options: alt='[require unique names: YES]'}}{\link[=subsets_classes]{require unique names: YES}} \cr
 The data.frame-like objects quite different from the previously named classes. \cr
 And the different data.frame-like classes also differ from each other quite a bit -
@@ -81,3 +182,84 @@ will automatically adjust the column names to make them unique. \cr \cr
 }
 }
 
+\examples{
+
+# Coercion examples - Atomic ====
+
+x <- 1:16
+sb_set(x, i = 1:6, rp = 8.5)
+x
+
+#############################################################################
+
+
+# Coercion examples - List ====
+
+x <- list(factor(letters), factor(letters))
+sb_mod(x, 1, rp = list(1))
+sb_set(x, 1, rp = list(1)); print(x)
+x <- list(1:10, 1:10)
+
+sb_rec(x, 1) |> sb_mod(i = 1, rp = "a") # coerces to character
+sb_rec(x, 1) |> sb_set(i = 1, rp = "a"); print(x) # no coercion; "a" replaced with NA.
+
+#############################################################################
+
+
+# Coercion examples - data.frame-like - whole columns ====
+
+# sb_mod():
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
+sb_mod(
+  obj, vars = is.numeric,
+  tf = sqrt # SAFE: row=NULL & filter = NULL, so coercion performed
+)
+
+# sb_set():
+sb_set(
+  obj, vars = is.numeric,
+  tf = sqrt # SAFE: row=NULL & filter = NULL, so coercion performed
+)
+str(obj)
+
+#############################################################################
+
+
+# Coercion examples - data.frame-like - partial columns ====
+
+# sb_mod():
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
+
+sb_mod(
+  obj, filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  tf = sqrt # WARNING: sqrt() results in `dbl`, but columns are `int`, so decimals lost
+) 
+sb_mod(
+  obj, filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  coe = as.double, tf = sqrt # SAFE: coercion performed
+)
+
+# sb_set():
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
+sb_set(
+  obj, filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  tf = sqrt # WARNING: sqrt() results in `dbl`, but columns are `int`, so decimals lost
+)
+print(obj)
+
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj)
+obj <- sb_coe(obj, vars = is.numeric, v = as.numeric)
+str(obj)
+sb_set(obj,
+  filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  tf = sqrt # SAFE: coercion performed by sb_coe(); so no warnings
+) 
+print(obj)
+
+
+
+}

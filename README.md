@@ -278,5 +278,8 @@ tinycodet::import_LL("subsets", selection = ... )
   once this package is a bit more stable.
 - 14 December 2023: Experimental website published.
 - 16 December 2023: Small documentation improvements.
+- 19 December 2023: `sb_set.data.frame()` now has the same coercion
+  rules as `sb_mod.data.frame()`. Auto-coercion rules moved to the
+  `subsets_classes` help page.
 
  

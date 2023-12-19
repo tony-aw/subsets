@@ -266,6 +266,7 @@ tinycodet::import_LL("subsets", selection = ... )
  - 1 December 2023: In the `sb_mod()` method, auto-coercion in data.frame-like objects is now allowed, provided rows are not specified (i.e. whole columns only). Expanded the help page of the `sb_mod()` function considerably. Fixed a bug in `aes_pro()`. Added the `safer_partialmatch()` function. Added the `idx_by()` function to compute grouped indices. Added the `dt_*` functions for functional forms of some data.table operations. Cleaned up some internal code. Added yet more tests (now over 42,000 tests). Benchmark removed from the Read-Me: planning to move them to the website, which will be build once this package is a bit more stable.
  - 14 December 2023: Experimental website published.
  - 16 December 2023: Small documentation improvements.
+ - 19 December 2023: `sb_set.data.frame()` now has the same coercion rules as `sb_mod.data.frame()`. Auto-coercion rules moved to the `subsets_classes` help page.
  
 
 &nbsp;

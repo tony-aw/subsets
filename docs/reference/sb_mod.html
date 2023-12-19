@@ -121,7 +121,11 @@ and also see <a href="sb_coe.html">sb_coe</a>. <br></p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A copy of the object with replaced/transformed values.</p>
+<p>A copy of the object with replaced/transformed values. <br></p>
+<p></p>
+<p><br></p>
+
+
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -130,45 +134,6 @@ Specifying argument <code>tf</code> will transform the subset. <br>
 Specifying <code>rp</code> will replace the subset. <br>
 One cannot specify both <code>tf</code> and <code>rp</code>. It's either one set or the other. <br>
 Note that the <code>tf</code> argument is not available for factors: this is intentional. <br><br></p>
-    </div>
-    <div class="section level2">
-    <h2 id="auto-coercion-rules">Auto-Coercion Rules<a class="anchor" aria-label="anchor" href="#auto-coercion-rules"></a></h2>
-    
-
-<p><b>Atomic objects</b> <br><img src="figures/auto-coercion-YES-darkgreen.svg" alt="[auto-coercion: YES]"><br>
-Atomic objects are automatically coerced to fit the replaced values. <br>
-For example, replacing one or multiple values in an integer vector
-(type <code>int</code>)
-with a decimal number
-(type <code>dbl</code>)
-will coerce the entire vector to type <code>dbl</code>. <br><br><b>Factors</b> <br><img src="figures/auto-coercion-NO-red.svg" alt="[auto-coercion: NO]"><br>
-Factors only accept values that are part of their levels,
-and thus do NOT support coercion. <br>
-Replacing a value with a new value not part of its levels,
-will result in the replacement value being <code>NA</code>. <br><br><b>Data.frame-like objects when replacing/transforming whole columns</b> <br><img src="figures/auto-coercion-depends-lightblue.svg" alt="[auto-coercion: depends]"><br>
-When replacing whole columns, so <code>row = NULL</code> and <code>filter = NULL</code>,
-coercion takes place according to the contents of the column. <br>
-I.e. if the column is atomic, it follows the atomic rules,
-if it is a factor, it follows the rules of the factor, etc. <br>
-Note that coercion of columns needs <code>row = NULL</code> and <code>filter = NULL</code>;
-NO auto-coercion will take place when specifying something like <code>row = 1:nrow(x)</code>
-(see next section). <br><br><b>Data.frame-like objects when partially replacing/transforming columns</b> <br><img src="figures/auto-coercion-NO-red.svg" alt="[auto-coercion: NO]"><br>
-If rows are specified,
-and thus not whole columns but parts of columns are replaced or transformed,
-NO auto-coercion takes place. <br>
-I.e.: replacing/transforming a value in an integer (<code>int</code>) column to become <code>1.5</code>,
-will NOT coerce the column to the decimal type (<code>dbl</code>);
-instead, the replacement value <code>1.5</code> is coerced to integer <code>1</code>. <br>
-The <code>coe</code> argument allows the user to enforce coercion,
-even if subsets of columns are replaced/transformed instead of whole columns. <br>
-Specifically, the <code>coe</code> arguments allows the user to specify a coercive function
-to be applied on the entirety of every column specified in <code>col</code> or <code>vars</code>;
-columns outside this subset are not affected. <br>
-This coercion function is, of course, applied before replacement (<code>rp</code>) or transformation (<code>tf()</code>). <br><br><b>Lists</b> <br><img src="figures/auto-coercion-depends-lightblue.svg" alt="[auto-coercion: depends]"><br>
-Lists themselves allow complete change of their elements,
-since lists are merely pointers. <br>
-However, a recursive subset of a list which itself is not a list,
-follows the coercion rules of whatever class the recursive subset is. <br><br><br></p>
     </div>
 
     <div class="section level2">
@@ -423,7 +388,7 @@ follows the coercion rules of whatever class the recursive subset is. <br><br><b
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ d: Factor w/ 10 levels "a","b","c","d",..: 1 2 3 4 5 6 7 8 9 10</span>
 <span class="r-in"><span><span class="fu">sb_mod</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">obj</span>, vars <span class="op">=</span> <span class="va">is.numeric</span>,</span></span>
-<span class="r-in"><span>  tf <span class="op">=</span> <span class="va">sqrt</span> <span class="co"># SAFE: row=NULL &amp; filter = NULL, so regular auto-coercion</span></span></span>
+<span class="r-in"><span>  tf <span class="op">=</span> <span class="va">sqrt</span> <span class="co"># SAFE: row=NULL &amp; filter = NULL, so coercion performed</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           a b        c d</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.000000 a 3.316625 a</span>

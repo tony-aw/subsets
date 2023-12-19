@@ -60,7 +60,7 @@ See also the \code{Auto-Coercion Rules} and \code{Examples} sections below,
 and also see \link{sb_coe}. \cr}
 }
 \value{
-A copy of the object with replaced/transformed values.
+A copy of the object with replaced/transformed values. \cr \cr
 }
 \description{
 This is an S3 Method to return a copy of an object with modified subsets.
@@ -73,58 +73,6 @@ One cannot specify both \code{tf} and \code{rp}. It's either one set or the othe
 Note that the \code{tf} argument is not available for factors: this is intentional. \cr
 \cr
 }
-\section{Auto-Coercion Rules}{
-
-\bold{Atomic objects} \cr
-\ifelse{html}{\figure{auto-coercion-YES-darkgreen.svg}{options: alt='[auto-coercion: YES]'}}{\link[=subsets_classes]{auto-coercion: YES}} \cr
-Atomic objects are automatically coerced to fit the replaced values. \cr
-For example, replacing one or multiple values in an integer vector
-(type \code{int})
-with a decimal number
-(type \code{dbl})
-will coerce the entire vector to type \code{dbl}. \cr
-\cr
-\bold{Factors} \cr
-\ifelse{html}{\figure{auto-coercion-NO-red.svg}{options: alt='[auto-coercion: NO]'}}{\link[=subsets_classes]{auto-coercion: NO}} \cr
-Factors only accept values that are part of their levels,
-and thus do NOT support coercion. \cr
-Replacing a value with a new value not part of its levels,
-will result in the replacement value being \code{NA}. \cr
-\cr
-\bold{Data.frame-like objects when replacing/transforming whole columns} \cr
-\ifelse{html}{\figure{auto-coercion-depends-lightblue.svg}{options: alt='[auto-coercion: depends]'}}{\link[=subsets_classes]{auto-coercion: depends}} \cr
-When replacing whole columns, so \code{row = NULL} and \code{filter = NULL},
-coercion takes place according to the contents of the column. \cr
-I.e. if the column is atomic, it follows the atomic rules,
-if it is a factor, it follows the rules of the factor, etc. \cr
-Note that coercion of columns needs \code{row = NULL} and \code{filter = NULL};
-NO auto-coercion will take place when specifying something like \code{row = 1:nrow(x)}
-(see next section). \cr
-\cr
-\bold{Data.frame-like objects when partially replacing/transforming columns} \cr
-\ifelse{html}{\figure{auto-coercion-NO-red.svg}{options: alt='[auto-coercion: NO]'}}{\link[=subsets_classes]{auto-coercion: NO}} \cr
-If rows are specified,
-and thus not whole columns but parts of columns are replaced or transformed,
-NO auto-coercion takes place. \cr
-I.e.: replacing/transforming a value in an integer (\code{int}) column to become \code{1.5},
-will NOT coerce the column to the decimal type (\code{dbl});
-instead, the replacement value \code{1.5} is coerced to integer \code{1}. \cr
-The \code{coe} argument allows the user to enforce coercion,
-even if subsets of columns are replaced/transformed instead of whole columns. \cr
-Specifically, the \code{coe} arguments allows the user to specify a coercive function
-to be applied on the entirety of every column specified in \code{col} or \code{vars};
-columns outside this subset are not affected. \cr
-This coercion function is, of course, applied before replacement (\code{rp}) or transformation (\code{tf()}). \cr
-\cr
-\bold{Lists} \cr
-\ifelse{html}{\figure{auto-coercion-depends-lightblue.svg}{options: alt='[auto-coercion: depends]'}}{\link[=subsets_classes]{auto-coercion: depends}} \cr
-Lists themselves allow complete change of their elements,
-since lists are merely pointers. \cr
-However, a recursive subset of a list which itself is not a list,
-follows the coercion rules of whatever class the recursive subset is. \cr
-\cr \cr
-}
-
 \examples{
 
 # atomic objects ====
@@ -193,7 +141,7 @@ obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:1
 str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
 sb_mod(
   obj, vars = is.numeric,
-  tf = sqrt # SAFE: row=NULL & filter = NULL, so regular auto-coercion
+  tf = sqrt # SAFE: row=NULL & filter = NULL, so coercion performed
 )
 
 

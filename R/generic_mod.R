@@ -23,56 +23,6 @@
 #' and also see \link{sb_coe}. \cr
 #' 
 #' 
-#' @section Auto-Coercion Rules: 
-#' \bold{Atomic objects} \cr
-#' `r .mybadge_coercion("YES")` \cr
-#' Atomic objects are automatically coerced to fit the replaced values. \cr
-#' For example, replacing one or multiple values in an integer vector
-#' (type `int`)
-#' with a decimal number
-#' (type `dbl`)
-#' will coerce the entire vector to type `dbl`. \cr
-#' \cr
-#' \bold{Factors} \cr
-#' `r .mybadge_coercion("NO")` \cr
-#' Factors only accept values that are part of their levels,
-#' and thus do NOT support coercion. \cr
-#' Replacing a value with a new value not part of its levels,
-#' will result in the replacement value being `NA`. \cr
-#' \cr
-#' \bold{Data.frame-like objects when replacing/transforming whole columns} \cr
-#' `r .mybadge_coercion("depends")` \cr
-#' When replacing whole columns, so `row = NULL` and `filter = NULL`,
-#' coercion takes place according to the contents of the column. \cr
-#' I.e. if the column is atomic, it follows the atomic rules,
-#' if it is a factor, it follows the rules of the factor, etc. \cr
-#' Note that coercion of columns needs `row = NULL` and `filter = NULL`;
-#' NO auto-coercion will take place when specifying something like `row = 1:nrow(x)`
-#' (see next section). \cr
-#' \cr
-#' \bold{Data.frame-like objects when partially replacing/transforming columns} \cr
-#' `r .mybadge_coercion("NO")` \cr
-#' If rows are specified,
-#' and thus not whole columns but parts of columns are replaced or transformed,
-#' NO auto-coercion takes place. \cr
-#' I.e.: replacing/transforming a value in an integer (`int`) column to become `1.5`,
-#' will NOT coerce the column to the decimal type (`dbl`);
-#' instead, the replacement value `1.5` is coerced to integer `1`. \cr
-#' The `coe` argument allows the user to enforce coercion,
-#' even if subsets of columns are replaced/transformed instead of whole columns. \cr
-#' Specifically, the `coe` arguments allows the user to specify a coercive function
-#' to be applied on the entirety of every column specified in `col` or `vars`;
-#' columns outside this subset are not affected. \cr
-#' This coercion function is, of course, applied before replacement (`rp`) or transformation (`tf()`). \cr
-#' \cr
-#' \bold{Lists} \cr
-#' `r .mybadge_coercion("depends")` \cr
-#' Lists themselves allow complete change of their elements,
-#' since lists are merely pointers. \cr
-#' However, a recursive subset of a list which itself is not a list,
-#' follows the coercion rules of whatever class the recursive subset is. \cr
-#' \cr \cr
-#' 
 #' 
 #' @details
 #' \bold{Transform or Replace} \cr
@@ -85,7 +35,7 @@
 #' 
 #' 
 #' @returns
-#' A copy of the object with replaced/transformed values.
+#' A copy of the object with replaced/transformed values. \cr \cr
 #'
 #'
 #' @examples
@@ -156,7 +106,7 @@
 #' str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
 #' sb_mod(
 #'   obj, vars = is.numeric,
-#'   tf = sqrt # SAFE: row=NULL & filter = NULL, so regular auto-coercion
+#'   tf = sqrt # SAFE: row=NULL & filter = NULL, so coercion performed
 #' )
 #'
 #'

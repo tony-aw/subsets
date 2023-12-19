@@ -37,10 +37,11 @@ and the same same length as the selected subset of \code{x} or a length of 1.}
 \value{
 Returns: VOID. This method modifies the object by REFERENCE. \cr
 Do NOT use assignment like \code{x <- sb_set(x, ...)}. \cr
-Since this function returns void, you'll just get NULL. \cr
+Since this function returns void, you'll just get NULL. \cr \cr
 }
 \description{
-This is an S3 Method to replace or transform a subset of an object BY REFERENCE. \cr
+This is an S3 Method to replace or transform a subset of an object
+\bold{By Reference}. \cr \cr
 }
 \details{
 \bold{Transform or Replace} \cr
@@ -50,30 +51,49 @@ One cannot specify both \code{tf} and \code{rp}. It's either one set or the othe
 Note that there is not \code{sb_set()} method for factors: this is intentional. \cr
 \cr
 }
-\section{Warning}{
+\section{Reference Semantics}{
 
-Due to the way replacement or transformation by reference works,
-types (see \link[base]{typeof}) CANNOT be coerced to another type.
-Thus, for example, the following code:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- 1:16
-sb_set(x, i = 1:8, rp = 8.5)
-x
+The \code{sb_set()} method modifies an object \bold{by reference}. \cr
+The advantage of this is that less memory is required to modify objects. \cr
+But modifying an object by reference does have 3 potential disadvantages. \cr
+\cr
+First, the coercion rules are slightly different: see \link{subsets_classes}. \cr
+\cr
+Second, if 2 or more variables refer to exactly the same object,
+changing one variable also changes the other ones. \cr
+I.e. the following code,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{x <- y <- 1:16
+sb_set(x, i = 1:6, rp = 8)
 }\if{html}{\out{</div>}}
 
-gives \verb{c(rep(8, 8) 9:16)} instead of \code{c(rep(8.5, 8), 9:16)},
-because \code{x} is of type \code{integer}, so \code{rp} is interpreted as type \code{integer} also. \cr
+modifies not just \code{x}, but also \code{y}. \cr
+\cr
+Third, the second consequence is true even if one of the variables is locked
+(see \link[base]{bindingIsLocked}). \cr
+I.e. the following code,
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tinycodet::import_LL("tinycodet", "\%<-c\%")
+x <- 1:16
+y \%<-c\% x
+sb_set(x, i = 1:6, rp = 8)
+}\if{html}{\out{</div>}}
+
+modifies both \code{x} and \code{y} without error,
+even though \code{y} is a locked constant. \cr \cr
 }
 
 \examples{
+
+
+# atomic objects ====
 
 gen_mat <- function() {
   obj <- matrix(1:16, ncol = 4)
   colnames(obj) <- c("a", "b", "c", "a")
   return(obj)
 }
-
-# atomic objects ====
 
 obj <- obj2 <- gen_mat()
 obj
@@ -115,5 +135,33 @@ sb_set(obj, i = \(x)x<=5, rp = -1:-5)
 obj
 
 
+#############################################################################
+
+# data.frame ====
+
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
+sb_set(
+  obj, filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  tf = sqrt # WARNING: sqrt() results in `dbl`, but columns are `int`, so decimals lost
+)
+print(obj)
+
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+obj <- sb_coe(obj, vars = is.numeric, v = as.numeric)
+str(obj)
+sb_set(obj,
+  filter = ~ (a >= 2) & (c <= 17), vars = is.numeric,
+  tf = sqrt # SAFE: coercion performed by sb_coe(); so no warnings
+) 
+print(obj)
+
+obj <- data.frame(a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10]))
+str(obj) # notice that columns "a" and "c" are INTEGER (`int`)
+sb_set(
+  obj, vars = is.numeric,
+  tf = sqrt # SAFE: row=NULL & filter = NULL, so coercion performed
+)
+str(obj)
 
 }
