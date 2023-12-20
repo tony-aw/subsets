@@ -18,4 +18,3 @@ README.html
 ^LICENSE\.md$
 inst/tinytest/count_tests
 usethis
-^performance

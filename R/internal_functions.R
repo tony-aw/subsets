@@ -188,7 +188,7 @@
     }
   }
   
-  if(any(collapse::`%!iin%`(indx, levels(x)))) {
+  if(any(!indx %in% levels(x))) {
     error.txt <- "unknown level given"
     stop(simpleError(error.txt, call = abortcall))
   }
@@ -218,7 +218,7 @@
     stop(simpleError(error.txt, call = abortcall))
   }
 
-  if(any(collapse::`%!iin%`(indx, levels(x)))) {
+  if(any(!indx %in% levels(x))) {
     error.txt <- "unknown level given"
     stop(simpleError(error.txt, call = abortcall))
   }
