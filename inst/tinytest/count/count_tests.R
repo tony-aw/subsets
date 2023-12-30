@@ -30,7 +30,7 @@ enumerate_total <- 0
 files <- list.files(normalizePath(getwd()), pattern = ".R", full.names = TRUE)
 for(iFile in files) {
   capture.output(source(normalizePath(iFile)), file = nullfile())
-  print(enumerate)
+  cat(enumerate, " -> ", basename(iFile), "\n")
   enumerate_total <- enumerate_total + enumerate
 }
 

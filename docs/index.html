@@ -237,6 +237,7 @@
 <li>14 December 2023: Experimental website published.</li>
 <li>16 December 2023: Small documentation improvements.</li>
 <li>19 December 2023: <code><a href="reference/sb_set.html">sb_set.data.frame()</a></code> now has the same coercion rules as <code><a href="reference/sb_mod.html">sb_mod.data.frame()</a></code>. Auto-coercion rules moved to the <code>subsets_classes</code> help page.</li>
+<li>30 December 2023: Removed the (arguably unnecessary) levels check in the internal code for improved speed. Added the <code>idx_ord_</code>-functions, and added some tests for these functions. Incorporated <code><a href="https://rdatatable.gitlab.io/data.table/reference/chmatch.html" class="external-link">data.table::`%chin%`</a></code> into the internal code for additional speed improvement. Added re-exports of the <code><a href="https://rdatatable.gitlab.io/data.table/reference/last.html" class="external-link">data.table::first()</a></code> and <code><a href="https://rdatatable.gitlab.io/data.table/reference/last.html" class="external-link">data.table::last()</a></code> functions. Added tests for <code>sb_mod.data.frame(x, rp = rp)</code> and <code>sb_set.data.frame(x, rp = rp)</code>. Added a test that checks if the return call is present in all functions where it is needed. Added some general tests here and there. With the newly added tests, About 47k tests in total are now present in this package.</li>
 </ul>
 <p> </p>
 </div>

@@ -83,12 +83,12 @@ for(i in 1:length(xlist)) {
 if(test_use_factors) {
   x <- factor(month.abb[1:10])
   names(x) <- letters[1:10]
+  # expect_error(
+  #   sb_test(x, lvl = "1"),
+  #   pattern = "unknown level given"
+  # ) |> errorfun()
   expect_error(
-    sb_test(x, lvl = 1),
-    pattern = "unknown level given"
-  ) |> errorfun()
-  expect_error(
-    sb_test(x, lvl = 1, i = 1),
+    sb_test(x, lvl = "1", i = 1),
     pattern = "cannot specify both elements and levels"
   ) |> errorfun()
   enumerate <- enumerate + 2

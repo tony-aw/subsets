@@ -4,11 +4,14 @@
 \alias{dt}
 \alias{dt_aggregate}
 \alias{dt_setcoe}
+\alias{dt_setrm}
 \title{Functional forms of data.table Operations (also work on tidytables)}
 \usage{
 dt_aggregate(x, SDcols = NULL, f, by, order_by = FALSE)
 
 dt_setcoe(x, col = NULL, vars = NULL, f)
+
+dt_setrm(x, col = NULL, vars = NULL)
 }
 \arguments{
 \item{x}{a \code{data.table} or \code{tidytable}.}
@@ -76,5 +79,25 @@ sb_set(obj,
 ) 
 str(obj)
 
+
+
+#############################################################################
+
+
+# dt_setrm ====
+
+obj <- data.table::data.table(
+  a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10])
+)
+str(obj)
+dt_setrm(obj, col = 1)
+str(obj)
+
+obj <- data.table::data.table(
+  a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10])
+)
+str(obj)
+dt_setrm(obj, vars = is.numeric)
+str(obj)
 \dontshow{\}) # examplesIf}
 }

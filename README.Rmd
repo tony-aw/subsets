@@ -267,6 +267,7 @@ tinycodet::import_LL("subsets", selection = ... )
  - 14 December 2023: Experimental website published.
  - 16 December 2023: Small documentation improvements.
  - 19 December 2023: `sb_set.data.frame()` now has the same coercion rules as `sb_mod.data.frame()`. Auto-coercion rules moved to the `subsets_classes` help page.
+ - 30 December 2023: Removed the (arguably unnecessary) levels check in the internal code for improved speed. Added the `idx_ord_`-functions, and added some tests for these functions. Incorporated `` data.table::`%chin%` `` into the internal code for additional speed improvement. Added re-exports of the `data.table::first()` and `data.table::last()` functions. Added tests for `sb_mod.data.frame(x, rp = rp)` and `sb_set.data.frame(x, rp = rp)`. Added a test that checks if the return call is present in all functions where it is needed. Added some general tests here and there. With the newly added tests, About 47k tests in total are now present in this package.
  
 
 &nbsp;

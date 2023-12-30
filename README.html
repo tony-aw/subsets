@@ -844,6 +844,17 @@ package is a bit more stable.</li>
 <li>19 December 2023: <code>sb_set.data.frame()</code> now has the same
 coercion rules as <code>sb_mod.data.frame()</code>. Auto-coercion rules
 moved to the <code>subsets_classes</code> help page.</li>
+<li>30 December 2023: Removed the (arguably unnecessary) levels check in
+the internal code for improved speed. Added the
+<code>idx_ord_</code>-functions, and added some tests for these
+functions. Incorporated <code>data.table::`%chin%`</code> into the
+internal code for additional speed improvement. Added re-exports of the
+<code>data.table::first()</code> and <code>data.table::last()</code>
+functions. Added tests for <code>sb_mod.data.frame(x, rp = rp)</code>
+and <code>sb_set.data.frame(x, rp = rp)</code>. Added a test that checks
+if the return call is present in all functions where it is needed. Added
+some general tests here and there. With the newly added tests, About 47k
+tests in total are now present in this package.</li>
 </ul>
 <p> </p>
 

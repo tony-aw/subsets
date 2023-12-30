@@ -14,6 +14,8 @@
 #'  * `lvl`: specify levels, for factors only.
 #'  * `filter, vars`: to specify rows and/or columns specifically in data.frame-like objects. \cr \cr
 #' 
+#' In this help page, `x` refers to the object to be sub-setted. \cr
+#' \cr
 #' 
 #' @section Argument i:
 #' `r .mybadge_class("atomic")` \cr
@@ -24,24 +26,29 @@
 #' Any of the following can be specified for argument `i`:
 #' 
 #'  * `NULL`, only for multi-dimensional objects or factors,
-#'  when specifying the other arguments (i.e. dimensional indices or factor levels.)
+#'  when specifying the other arguments
+#'  (i.e. dimensional indices or factor levels.)
 #'  * a vector of length 0,
-#'  in which case no indices are selected for the operation (i.e. empty selection).
+#'  in which case no indices are selected for the operation
+#'  (i.e. empty selection).
 #'  * a \bold{strictly positive integer} vector with indices.
 #'  * a \bold{logical vector} (without `NA`s!),
 #'  of the same length as `x`,
 #'  giving the indices to select for the operation.
-#'  * a \bold{character} vector of index names.
+#'  * a \bold{character} vector of index names. \cr
 #'  If an object has multiple indices with the given name,
 #'  ALL the corresponding indices will be selected for the operation.
-#'  * a \bold{function} that returns a logical vector,
-#'  giving the element indices to select for the operation.
+#'  * a \bold{function} that takes as input `x`,
+#'  and returns a logical vector,
+#'  giving the element indices to select for the operation. \cr
+#'  For atomic objects, `i` is interpreted as `i(x)`. \cr
+#'  For lists, `i` is interpreted as `lapply(x, i)`. \cr
 #'
 #' 
 #' Using the `i` arguments corresponds to doing something like the following:
 #' 
 #' ```
-#'  sb_x(x, i = i) ==> x[i]
+#'  sb_x(x, i = i) # ==> x[i]
 #'  
 #' ```
 #' 
@@ -63,7 +70,7 @@
 #'  * a \bold{strictly positive integer} vector with dimension indices to select for the operation.
 #'  * a \bold{logical} vector (without `NA`s!) of the same length as the corresponding dimension size,
 #'  giving the indices of this dimension to select for the operation.
-#'  * a \bold{character} vector of index names.
+#'  * a \bold{character} vector of index names. \cr
 #'  If an object has multiple indices with the given name,
 #'  ALL the corresponding indices will be selected for the operation.
 #' 
@@ -72,7 +79,7 @@
 #' Using the `row, col` arguments corresponds to doing something like the following:
 #' 
 #' ```
-#'  sb_x(x, row = row, col = col) ==> x[row, col, drop = FALSE]
+#'  sb_x(x, row = row, col = col) # ==> x[row, col, drop = FALSE]
 #'  
 #' ```
 #' 
@@ -94,7 +101,7 @@
 #' here using an example of a 4-dimensional array:
 #' 
 #' ```
-#' sb_x(x, n(1:10, 1:5), c(1, 3)) ==> x[1:10, , 1:5, , drop = FALSE]
+#' sb_x(x, n(1:10, 1:5), c(1, 3)) # ==> x[1:10, , 1:5, , drop = FALSE]
 #' 
 #' ```
 #' 
@@ -121,7 +128,7 @@
 #'  * a \bold{strictly positive integer} vector with dimension indices to select for the operation.
 #'  * a \bold{logical} vector (without `NA`s!) of the same length as the corresponding dimension size,
 #'  giving the indices of this dimension to select for the operation.
-#'  * a \bold{character} vector of index names.
+#'  * a \bold{character} vector of index names. \cr
 #'  If an object has multiple indices with the given name,
 #'  ALL the corresponding indices will be selected for the operation.
 #' 
@@ -134,7 +141,7 @@
 #' Using the `rcl` argument corresponds to doing something like the following:
 #' 
 #' ```
-#' sb_x(x, rcl = n(NULL, 1:10, 1:5)) ==> x[, 1:10, 1:5, drop = FALSE]
+#' sb_x(x, rcl = n(NULL, 1:10, 1:5)) # ==> x[, 1:10, 1:5, drop = FALSE]
 #' 
 #' ```
 #' 
@@ -165,11 +172,15 @@
 #' For example, to select all numeric columns, specify `vars = is.numeric`. \cr
 #' \cr
 #' 
-#' 
 #' @section Duplicates (for Names, Integers, and Levels):
 #' Generally speaking, duplicate names, integers, or levels are NOT allowed in index selection. \cr
 #' The exception is the \link{sb_x} method,
 #' as that method can be used for duplicating indices. \cr
+#' \cr
+#' 
+#' @section Out-of-Bounds Integers and Unknown Names/Levels:
+#' Integers that are out of bounds always give an error. \cr
+#' Specifying unknown names/levels is considered a form of zero-length indexing. \cr
 #' \cr
 #' 
 #' @section Disallowed Combinations of Index Arguments:
@@ -188,11 +199,24 @@
 #' In the above cases it holds that if one set is specified, the other is set is ignored. \cr
 #' \cr
 #' 
+#' @section Drop:
+#' Sub-setting with the generic methods from the 'subsets' R-package using dimensional arguments
+#' (`row, col, lyr, idx, dims, filter, vars`)
+#' always use `drop = FALSE`. \cr
+#' To drop potentially redundant (i.e. single level) dimensions,
+#' use the \link[base]{drop} function, like so:
+#' 
+#' ```
+#'  sb_x(x, row = row, col = col) |> drop() # ==> x[row, col, drop = TRUE]
+#'  
+#' ```
+#' 
+#' 
 #' @section First, Last, and Shuffle:
 #' The indices are counted forward. I.e. `1` is the first element, not the last. \cr
-#' One can use the \link{tail} function to get the last `N` indices. \cr
+#' One can use the \link[data.table]{last} function to get the last `N` indices. \cr
 #' \cr
-#' One can use the \link{head} function to get the first `N` indices. \cr
+#' One can use the \link[data.table]{first} function to get the first `N` indices. \cr
 #' \cr
 #' To shuffle elements of indices, use the \link[base]{sample} function. \cr
 #' \cr
@@ -203,3 +227,13 @@
 #' @name aaa2_subsets_indx_args
 #' @aliases subsets_indx_args
 NULL
+
+
+#' @importFrom data.table first
+#' @export
+data.table::first
+
+#' @importFrom data.table last
+#' @export
+data.table::last
+

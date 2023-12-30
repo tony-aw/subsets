@@ -18,6 +18,9 @@ in arrays that have exactly 3 dimensions.
 \item \code{lvl}: specify levels, for factors only.
 \item \verb{filter, vars}: to specify rows and/or columns specifically in data.frame-like objects. \cr \cr
 }
+
+In this help page, \code{x} refers to the object to be sub-setted. \cr
+\cr
 }
 \section{Argument i}{
 
@@ -28,23 +31,28 @@ in arrays that have exactly 3 dimensions.
 Any of the following can be specified for argument \code{i}:
 \itemize{
 \item \code{NULL}, only for multi-dimensional objects or factors,
-when specifying the other arguments (i.e. dimensional indices or factor levels.)
+when specifying the other arguments
+(i.e. dimensional indices or factor levels.)
 \item a vector of length 0,
-in which case no indices are selected for the operation (i.e. empty selection).
+in which case no indices are selected for the operation
+(i.e. empty selection).
 \item a \bold{strictly positive integer} vector with indices.
 \item a \bold{logical vector} (without \code{NA}s!),
 of the same length as \code{x},
 giving the indices to select for the operation.
-\item a \bold{character} vector of index names.
+\item a \bold{character} vector of index names. \cr
 If an object has multiple indices with the given name,
 ALL the corresponding indices will be selected for the operation.
-\item a \bold{function} that returns a logical vector,
-giving the element indices to select for the operation.
+\item a \bold{function} that takes as input \code{x},
+and returns a logical vector,
+giving the element indices to select for the operation. \cr
+For atomic objects, \code{i} is interpreted as \code{i(x)}. \cr
+For lists, \code{i} is interpreted as \code{lapply(x, i)}. \cr
 }
 
 Using the \code{i} arguments corresponds to doing something like the following:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ sb_x(x, i = i) ==> x[i]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{ sb_x(x, i = i) # ==> x[i]
  
 }\if{html}{\out{</div>}}
 
@@ -67,7 +75,7 @@ in which case no indices are selected for the operation (i.e. empty selection).
 \item a \bold{strictly positive integer} vector with dimension indices to select for the operation.
 \item a \bold{logical} vector (without \code{NA}s!) of the same length as the corresponding dimension size,
 giving the indices of this dimension to select for the operation.
-\item a \bold{character} vector of index names.
+\item a \bold{character} vector of index names. \cr
 If an object has multiple indices with the given name,
 ALL the corresponding indices will be selected for the operation.
 }
@@ -76,7 +84,7 @@ NOTE: The arguments \code{row} and \code{col} will be ignored if \code{i} is spe
 
 Using the \verb{row, col} arguments corresponds to doing something like the following:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{ sb_x(x, row = row, col = col) ==> x[row, col, drop = FALSE]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{ sb_x(x, row = row, col = col) # ==> x[row, col, drop = FALSE]
  
 }\if{html}{\out{</div>}}
 }
@@ -99,7 +107,7 @@ Using the \verb{idx, dims} arguments,
 corresponds to doing something like the following,
 here using an example of a 4-dimensional array:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{sb_x(x, n(1:10, 1:5), c(1, 3)) ==> x[1:10, , 1:5, , drop = FALSE]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{sb_x(x, n(1:10, 1:5), c(1, 3)) # ==> x[1:10, , 1:5, , drop = FALSE]
 
 }\if{html}{\out{</div>}}
 }
@@ -128,7 +136,7 @@ in which case no indices are selected for the operation (i.e. empty selection).
 \item a \bold{strictly positive integer} vector with dimension indices to select for the operation.
 \item a \bold{logical} vector (without \code{NA}s!) of the same length as the corresponding dimension size,
 giving the indices of this dimension to select for the operation.
-\item a \bold{character} vector of index names.
+\item a \bold{character} vector of index names. \cr
 If an object has multiple indices with the given name,
 ALL the corresponding indices will be selected for the operation.
 }
@@ -141,7 +149,7 @@ the user can use the \link{n} function instead of \code{list()} to specify \code
 \cr
 Using the \code{rcl} argument corresponds to doing something like the following:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{sb_x(x, rcl = n(NULL, 1:10, 1:5)) ==> x[, 1:10, 1:5, drop = FALSE]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{sb_x(x, rcl = n(NULL, 1:10, 1:5)) # ==> x[, 1:10, 1:5, drop = FALSE]
 
 }\if{html}{\out{</div>}}
 }
@@ -183,6 +191,13 @@ as that method can be used for duplicating indices. \cr
 \cr
 }
 
+\section{Out-of-Bounds Integers and Unknown Names/Levels}{
+
+Integers that are out of bounds always give an error. \cr
+Specifying unknown names/levels is considered a form of zero-length indexing. \cr
+\cr
+}
+
 \section{Disallowed Combinations of Index Arguments}{
 
 
@@ -202,12 +217,25 @@ In the above cases it holds that if one set is specified, the other is set is ig
 \cr
 }
 
+\section{Drop}{
+
+Sub-setting with the generic methods from the 'subsets' R-package using dimensional arguments
+(\verb{row, col, lyr, idx, dims, filter, vars})
+always use \code{drop = FALSE}. \cr
+To drop potentially redundant (i.e. single level) dimensions,
+use the \link[base]{drop} function, like so:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{ sb_x(x, row = row, col = col) |> drop() # ==> x[row, col, drop = TRUE]
+ 
+}\if{html}{\out{</div>}}
+}
+
 \section{First, Last, and Shuffle}{
 
 The indices are counted forward. I.e. \code{1} is the first element, not the last. \cr
-One can use the \link{tail} function to get the last \code{N} indices. \cr
+One can use the \link[data.table]{last} function to get the last \code{N} indices. \cr
 \cr
-One can use the \link{head} function to get the first \code{N} indices. \cr
+One can use the \link[data.table]{first} function to get the first \code{N} indices. \cr
 \cr
 To shuffle elements of indices, use the \link[base]{sample} function. \cr
 \cr

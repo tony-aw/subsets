@@ -154,7 +154,9 @@ sb_x.array <- function(x, idx = NULL, dims = NULL, rcl = NULL, i = NULL, ..., ra
 
   if(rat) {
     x <- .fix_attr(.arr_x(x, idx, dims, abortcall = sys.call()), attributes(x))
-  } else { x <- .arr_x(x, idx, dims, abortcall = sys.call()) }
+  } else {
+    x <- .arr_x(x, idx, dims, abortcall = sys.call())
+  }
   return(x)
   
 }
@@ -227,10 +229,10 @@ sb_x.data.frame <- function(
   if(is.null(row)) row <- base::quote(expr = )
   if(is.null(col)) col <- base::quote(expr = )
   
-  out <- collapse::ss(x, row, col, check = FALSE)
+  x <- collapse::ss(x, row, col, check = FALSE)
   
-  names(out) <- make.names(names(out), unique = TRUE)
-  return(out)
+  names(x) <- make.names(names(x), unique = TRUE)
+  return(x)
 }
 
 

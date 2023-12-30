@@ -32,7 +32,7 @@ tidy evaluation,
 or similar programmatically unfriendly evaluations. \cr
 }
 \details{
-Non-Standard Evaluation is quite controversial (see \link{subsets_NSE}). \cr
+Non-Standard Evaluation is quite controversial (see \link{subsets_misc}). \cr
 \cr
 Often standard-evaluated alternatives provided. \cr
 But in the case of the \code{aes()} function in 'ggplot2',

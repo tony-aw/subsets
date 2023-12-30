@@ -299,6 +299,7 @@ indx_named <- function(x, dim.i) {
 sys.source(file.path(getwd(), "source", "sourcetest-datasets.R"), envir = environment())
 
 
+
 # test errors ====
 sb_test <- function(...)sb_mod(..., tf = \(x)x[1])
 sys.source(file.path(getwd(), "source", "sourcetest-errors.R"), envir = environment())

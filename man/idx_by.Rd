@@ -11,7 +11,7 @@ idx_by(f, r, grp, parallel = FALSE, mc.cores = 1L)
 The function must accept a character or integer vector as input,
 and produce a character or integer vector as output. \cr
 For example, to subset the last element per group, specify: \cr
-\verb{f = \\(i) tail(i, 1)}}
+\code{f = last}}
 
 \item{r}{an integer or character vector,
 giving the complete range of indices of an object. \cr
@@ -49,7 +49,7 @@ to perform \bold{grouped} subset operations. \cr
 (grp <- factor(rep(letters[1:5], each = 4)))
 
 # get the last element of `a` for each group in `grp`:
-i <- idx_by(\(i)tail(i, 1), 1:length(a), grp)
+i <- idx_by(last, 1:length(a), grp)
 sb_x(cbind(a, grp), row = i)
 
 
@@ -61,11 +61,11 @@ x <- data.frame(
 )
 print(x)
 # get the first row for each group in data.frame `x`:
-row <- idx_by(\(i)head(i, 1), 1:nrow(x), x$group)
+row <- idx_by(first, 1:nrow(x), x$group)
 sb_x(x, row)
 # get the first row for each group for which a > 10:
 x2 <- sb_x(x, filter = ~ a > 10)
-row <- na.omit(idx_by(\(i)head(i, 1), 1:nrow(x2), x2$group))
+row <- na.omit(idx_by(first, 1:nrow(x2), x2$group))
 sb_x(x2, row)
  
 }

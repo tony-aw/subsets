@@ -64,6 +64,26 @@
 #' ) 
 #' str(obj)
 #'
+#'
+#'
+#' #############################################################################
+#' 
+#' 
+#' # dt_setrm ====
+#' 
+#' obj <- data.table::data.table(
+#'   a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10])
+#' )
+#' str(obj)
+#' dt_setrm(obj, col = 1)
+#' str(obj)
+#' 
+#' obj <- data.table::data.table(
+#'   a = 1:10, b = letters[1:10], c = 11:20, d = factor(letters[1:10])
+#' )
+#' str(obj)
+#' dt_setrm(obj, vars = is.numeric)
+#' str(obj)
 #' 
 
 #' @name dt
@@ -99,18 +119,48 @@ dt_setcoe <- function(
   
   .check_args_df(x, row = NULL, col = col, filter = NULL, vars = vars, abortcall = sys.call())
   
-  if(!is.null(col)) { col <- .indx_make_tableind(
-    col, x,  2, allow_dupl = FALSE, inv = FALSE, abortcall = sys.call()
-  )}
+  if(!is.null(col)) {
+    col <- .indx_make_tableind(
+      col, x,  2, allow_dupl = FALSE, inv = FALSE, abortcall = sys.call()
+    )
+    col <- names(x)[col]
+  }
   
   if(!is.null(vars)) {
     col <- .indx_make_vars(x, vars, inv = FALSE, abortcall = sys.call())
+    col <- names(x)[col]
   }
   
   if(is.null(col)) col <- names(x)
   
-  for(j in as.integer(col)) { # using loop instead of lapply to reduce memory to only one column at a time
+  for(j in col) { # using loop instead of lapply to reduce memory to only one column at a time
     data.table::set(x, j = j, value = f(x[[j]]))
   }
 }
 
+
+#' @rdname dt
+#' @export
+dt_setrm <- function(x, col = NULL, vars = NULL) {
+  if(!data.table::is.data.table(x)) { stop("`x` must be a data.table") }
+  
+  .check_args_df(x, row = NULL, col = col, filter = NULL, vars = vars, abortcall = sys.call())
+  
+  if(!is.null(col)) {
+    col <- .indx_make_tableind(
+      col, x,  2, allow_dupl = FALSE, inv = FALSE, abortcall = sys.call()
+    )
+    col <- names(x)[col]
+  }
+  
+  if(!is.null(vars)) {
+    col <- .indx_make_vars(x, vars, inv = FALSE, abortcall = sys.call())
+    col <- names(x)[col]
+  }
+  
+  if(is.null(col) || length(col) == 0) stop("must specify at least one column")
+  
+  for(j in col) { # using loop instead of lapply to reduce memory to only one column at a time
+    data.table::set(x, j = j, value = NULL)
+  }
+}

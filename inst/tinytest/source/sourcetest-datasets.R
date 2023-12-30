@@ -63,9 +63,10 @@ if(requireNamespace("data.table")) {
 
 
 
-# tibble ===
+# tibble ====
 if(requireNamespace("tibble")) {
   x <- tibble::as_tibble(x.original)
+  
   temp.fun.main(x, row, col, filter, get_vars)
   
   
@@ -84,7 +85,7 @@ if(requireNamespace("tibble")) {
 
 
 
-# tidytable ===
+# tidytable ====
 if(requireNamespace("tidytable")) {
   x <- tidytable::as_tidytable(x.original)
   
@@ -104,6 +105,3 @@ if(requireNamespace("tidytable")) {
   }
   
 }
-
-
-

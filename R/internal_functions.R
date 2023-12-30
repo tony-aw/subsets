@@ -188,10 +188,10 @@
     }
   }
   
-  if(any(!indx %in% levels(x))) {
-    error.txt <- "unknown level given"
-    stop(simpleError(error.txt, call = abortcall))
-  }
+  # if(any(!data.table::`%chin%`(indx, levels(x)))) {
+  #   error.txt <- "unknown level given"
+  #   stop(simpleError(error.txt, call = abortcall))
+  # }
   
   if(!inv && allow_dupl) {
     out <- .selectnames(indx, x)
@@ -218,10 +218,10 @@
     stop(simpleError(error.txt, call = abortcall))
   }
 
-  if(any(!indx %in% levels(x))) {
-    error.txt <- "unknown level given"
-    stop(simpleError(error.txt, call = abortcall))
-  }
+  # if(any(!data.table::`%chin%`(indx, levels(x)))) {
+  #   error.txt <- "unknown level given"
+  #   stop(simpleError(error.txt, call = abortcall))
+  # }
   
   if(n.indx != length(rp)) {
     error.txt <- "recycling not allowed"
@@ -325,7 +325,7 @@
   if(length(filter) != 2) stop("invalid formula given")
   
   vars <- all.vars(filter)
-  if(any(!vars %in% names(x))) stop("unknown variables given")
+  if(any(!data.table::`%chin%`(vars, names(x)))) stop("unknown variables given")
   
   txt <- as.character(filter)[2]
   expr <- parse(text = txt)

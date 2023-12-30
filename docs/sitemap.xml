@@ -31,7 +31,7 @@
     <loc>https://tony-aw.github.io/subsets/reference/aaa2_subsets_indx_args.html</loc>
   </url>
   <url>
-    <loc>https://tony-aw.github.io/subsets/reference/aaa2_subsets_NSE.html</loc>
+    <loc>https://tony-aw.github.io/subsets/reference/aaa3_subsets_misc.html</loc>
   </url>
   <url>
     <loc>https://tony-aw.github.io/subsets/reference/dt.html</loc>
@@ -43,6 +43,9 @@
     <loc>https://tony-aw.github.io/subsets/reference/idx_by.html</loc>
   </url>
   <url>
+    <loc>https://tony-aw.github.io/subsets/reference/idx_ord.html</loc>
+  </url>
+  <url>
     <loc>https://tony-aw.github.io/subsets/reference/index.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>https://tony-aw.github.io/subsets/reference/pro.html</loc>
+  </url>
+  <url>
+    <loc>https://tony-aw.github.io/subsets/reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://tony-aw.github.io/subsets/reference/safer_dollar.html</loc>

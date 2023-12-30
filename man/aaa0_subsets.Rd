@@ -164,12 +164,12 @@ are provided:
 \item \link{n}: Nested version of \link[base]{c},
 and short-hand for \link[base]{list}.
 \item \link{idx_by}: Compute grouped indices.
+\item The \link[=idx_ord_v]{idx_ord_}-functions: Compute ordered indices.
 \item \link{seq_rec}: Recursive sequence generator
 (for example to generate a Fibonacci sequence).
 \item \link{seq_names}: create a range of indices from a specified starting and ending name.
 \item \link{sub2coord}, \link{coord2ind}: Convert subscripts
-(array indices)
-to coordinates,
+(array indices) to coordinates,
 coordinates to flat indices,
 and vice-versa. \cr \cr
 }
